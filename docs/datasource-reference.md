@@ -144,8 +144,8 @@
 | eo:gsd | float | 305.74 |
 | eo:epsg | int | 3857 |
 | eo:instrument | str | 'srtm' |
-| legacy:xtile | str | 'W102' |
-| legacy:ytile | str | 'N44' |
+| legacy:x | str | 'W102' |
+| legacy:y | str | 'N44' |
 
 ##### Notes
 - The source API doesn't support temporal data.  Can search with temporal but it is not honored.

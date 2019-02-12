@@ -43,14 +43,30 @@ date_time_notation = ("2018-10-30:T6:30:00.00Z", "2018-10-30:T8:30:00.00Z") # 2 
 ```
 
 ### Properties
-The following table shows which STAC properties are available when querying each datasource with the `properties` parameter.  Metadata exposed by the API which doesn't fit into an existing STAC extension is given the `legacy` extension.  Currently, only **eo-epsg** and **eo-instrument** are available to all datasources, while **eo-gsd** is available to all except Sentinel1.
+The following table shows which STAC properties are available when querying each datasource with the `properties` parameter.  Metadata exposed by the API which doesn't fit into an existing STAC extension is given the `legacy` extension.  Currently, only **eo-epsg** and **eo-instrument** are available to all datasources, while **eo-gsd** is available to all except Sentinel1.  See the [datasource-reference](./datasource-reference.md) for more information.
 
 | Name | STAC Properties | Legacy Properties | **kwargs |
 |----------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------|---------------------|
-| ElevationTiles | [eo:gsd, eo:epsg, eo:instrument] | [legacy:x, legacy:y, legacy:z] | [limit, resolution] |
+| ElevationTiles | [eo:gsd, eo:epsg, eo:instrument] | [legacy:x, legacy:y, legacy:z] | [limit, zoom] |
 | CBERS | [eo:gsd: eo:epsg, eo:instrument, eo:platform, eo:sun_elevation, eo:sun_azimuth] | [legacy:path, legacy:row, legacy:processing_level] | [limit] |
 | Landsat8 | [eo:gsd, eo:epsg, eo:instrument, eo:platform, eo:sun_elevation, eo:sun_azimuth, eo:off_nadir, eo:cloud_cover, eo:row, eo:column, landsat:processing_level] |  | [limit] |
 | NAIP | [eo:gsd, eo:epsg, eo:instrument] |  |  |
 | Sentinel1 | [eo:epsg, sar:polarization, sar:absolute_orbit, sar:type, sar:instrument_mode] | [legacy:lastorbitnumber, legacy:swathidentifier] | [limit] |
 | Sentinel2 | [eo:gsd, eo:epsg, eo:instrument, eo:platform, eo:cloud_cover, eo:instrument, sentinel:utm_zone, sentinel:latitude_band, sentinel:grid_square, sentinel:sequence, sentinel:product_id] |  | [limit] |
-| SRTM | [eo:gsd, eo:epsg, eo:instrument] | [legacy:xtile, legacy:ytile] | [limit] |
+| SRTM | [eo:gsd, eo:epsg, eo:instrument] | [legacy:xtile, legacy:ytile] | [limit] 
+
+### Response
+The response is a dictionary of feature collections with a key for each searched datasource.  Each feature in the feature collection is a STAC Item representing a single asset returned by the query.  Example STAC Items for each datasource can be found [here](./examples).
+
+```json
+{
+  "Landsat8": {
+    "type": "FeatureCollection",
+    "features": [STACItem, STACItem, ... ]
+  },
+  "Sentinel2": {
+    "type": "FeatureCollection",
+    "features": [STACItem, STACItem, ... ]
+  }
+}
+```

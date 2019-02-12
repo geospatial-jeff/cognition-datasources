@@ -12,6 +12,7 @@ Not all commonly used datasources are currently STAC-compliant.  In such cases, 
 ![title](docs/images/api-diagram.png)
 
 ## Usage
+#### Python
 ```python
 from datasources import Manifest
 from datasources.sources import Landsat8, Sentinel2
@@ -32,6 +33,11 @@ for source in manifest:
 
 # Execute searches
 response = manifest.execute()
+```
+
+#### CLI
+```
+cognition-datasources search xmin ymin xmax ymax --start-date "2018-10-30" --end-date "2018-12-31" -d Landsat8 -d SRTM --output response.json
 ```
 
 # Supported Datasources

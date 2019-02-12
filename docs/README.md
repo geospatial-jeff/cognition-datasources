@@ -70,3 +70,7 @@ The response is a dictionary of feature collections with a key for each searched
   }
 }
 ```
+
+### Authentication
+- Access to any datasources sourced by AWS Earth requires properly configured AWS credentials.  RequesterPay policies may apply.
+- Access to Sentinel-1 requires a valid Copernicus Open Access Hub account with username and password saved to the `COPERNICUS_USER` and `COPERNICUS_PASSWORD` environment variables.

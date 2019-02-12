@@ -89,8 +89,8 @@ class SRTM(Datasource):
                 'eo:gsd': query['res'],
                 'eo:epsg': query['epsg'],
                 'eo:instrument': query['source'],
-                'legacy:xtile': query['xtile'],
-                'legacy:ytile': query['ytile'],
+                'legacy:x': query['xtile'],
+                'legacy:y': query['ytile'],
             },
             "assets": {
                 "tile": {

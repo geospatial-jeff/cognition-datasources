@@ -1,0 +1,66 @@
+{
+ "type": "Feature",
+ "id": "962693c0-6b19-42f7-883d-77d38a25d03c",
+ "geometry": {
+  "type": "Polygon",
+  "coordinates": [
+   [
+    [
+     -101.669006,
+     47.260513
+    ],
+    [
+     -98.343529,
+     47.653275
+    ],
+    [
+     -97.979576,
+     46.037888
+    ],
+    [
+     -101.20459,
+     45.645889
+    ],
+    [
+     -101.669006,
+     47.260513
+    ]
+   ]
+  ]
+ },
+ "properties": {
+  "eo:epsg": 32614,
+  "dr:start_datetime": "2019-02-02T00:30:36.415000Z",
+  "datetime": "2019-02-02T00:30:36.415000Z",
+  "dr:end_position": "2019-02-02T00:31:03.372000Z",
+  "legacy:lastorbitnumber": 14760,
+  "sar:frequency_band": "C",
+  "sar:instrument_mode": "IW",
+  "sar:instrument": "Synthetic Aperture Radar (C-band)",
+  "legacy:swathidentifier": "IW1 IW2 IW3",
+  "sar:pass_direction": "ascending",
+  "sar:polarization": [
+   "VV",
+   "VH"
+  ],
+  "sar:type": "SLC",
+  "sar:platform": "Sentinel-1B",
+  "sar:constellation": "Sentinel-1"
+ },
+ "bbox": [
+  -101.669006,
+  45.645889,
+  -97.979576,
+  47.653275
+ ],
+ "assets": {
+  "analytic": {
+   "href": "https://scihub.copernicus.eu/dhus/odata/v1/Products('962693c0-6b19-42f7-883d-77d38a25d03c')/$value",
+   "title": "SAR Asset"
+  },
+  "thumbnail": {
+   "href": "https://scihub.copernicus.eu/dhus/odata/v1/Products('962693c0-6b19-42f7-883d-77d38a25d03c')/Products('Quicklook')/$value",
+   "title": "Thumbnail"
+  }
+ }
+}

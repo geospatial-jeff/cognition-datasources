@@ -1,0 +1,52 @@
+{
+ "id": "srtm-8-55-91",
+ "type": "Feature",
+ "bbox": [
+  -102.65625,
+  45.089035564831015,
+  -101.25,
+  46.07323062540836
+ ],
+ "geometry": {
+  "type": "Polygon",
+  "coordinates": [
+   [
+    [
+     -102.65625,
+     46.07323062540836
+    ],
+    [
+     -101.25,
+     46.07323062540836
+    ],
+    [
+     -101.25,
+     45.089035564831015
+    ],
+    [
+     -102.65625,
+     45.089035564831015
+    ],
+    [
+     -102.65625,
+     46.07323062540836
+    ]
+   ]
+  ]
+ },
+ "properties": {
+  "datetime": null,
+  "eo:gsd": 305.7481131407076,
+  "eo:epsg": 3857,
+  "eo:instrument": "srtm",
+  "legacy:x": 55,
+  "legacy:y": 91,
+  "legacy:z": 8
+ },
+ "assets": {
+  "tile": {
+   "href": "https://s3.amazonaws.com/elevation-tiles-prod/geotiff/8/55/91.tif",
+   "title": "Digital Elevation Tiles"
+  }
+ }
+}

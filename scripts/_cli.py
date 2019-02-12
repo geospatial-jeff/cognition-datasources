@@ -2,7 +2,7 @@ import json
 import time
 import click
 
-from datasources import Manifest
+from datasources import Manifest, sources
 
 
 @click.group(short_help="Cognition datasource query")
@@ -38,7 +38,7 @@ def search(spatial, start_date, end_date, properties, datasource, debug, output)
 
     manifest = Manifest()
     for source in datasource:
-        manifest.load_source(source)
+        manifest.load_source(getattr(sources, source))
         manifest[source].search(geoj, temporal=temporal, properties=properties, limit=10)
 
     if debug:

@@ -40,7 +40,10 @@ response = manifest.execute()
 cognition-datasources search xmin ymin xmax ymax --start-date "2018-10-30" --end-date "2018-12-31" -d Landsat8 -d SRTM --output response.json
 ```
 
-# Supported Datasources
+## Documentation
+Read the [quickstart](./docs/quickstart.ipynb) and [documentation](./docs).
+
+## Supported Datasources
 | Name | Source | STAC-Compliant | Notes |
 |----------------|--------------------------------------------------------------------------|----------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | ElevationTiles | [AWS Earth: Terrain Tiles](https://registry.opendata.aws/terrain-tiles/) | False | Sends header requests to AWS S3 Bucket. |

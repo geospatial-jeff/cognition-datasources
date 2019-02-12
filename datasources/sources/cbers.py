@@ -11,11 +11,11 @@ from aws_sat_api.search import cbers
 import utm
 
 from .base import Datasource
-from stac.query import STACQuery
-from stac.item import STACItem
+from datasources.stac.query import STACQuery
+from datasources.stac.item import STACItem
 
 
-rtree_location = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'static', 'cbers', 'cbers_rtree')
+rtree_location = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'static', 'cbers', 'cbers_rtree')
 s3 = boto3.client('s3')
 
 class CBERS(Datasource):

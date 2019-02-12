@@ -4,7 +4,7 @@ import copy
 
 import utm
 
-from stac.query import STACQuery
+from datasources.stac.query import STACQuery
 from .base import Datasource
 
 

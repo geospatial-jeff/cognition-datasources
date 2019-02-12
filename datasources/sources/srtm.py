@@ -3,7 +3,7 @@ import math
 import operator
 
 from .base import Datasource
-from stac.query import STACQuery
+from datasources.stac.query import STACQuery
 
 
 class SRTM(Datasource):

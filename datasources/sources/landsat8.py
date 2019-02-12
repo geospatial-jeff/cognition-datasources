@@ -1,7 +1,7 @@
 import json
 import requests
 
-from stac.query import STACQuery
+from datasources.stac.query import STACQuery
 from .base import Datasource
 
 class Landsat8(Datasource):

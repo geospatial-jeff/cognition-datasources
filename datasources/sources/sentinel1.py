@@ -1,11 +1,11 @@
 import os
 
 from .base import Datasource
-from stac.query import STACQuery
+from datasources.stac.query import STACQuery
 from sentinelsat.sentinel import SentinelAPI
 import utm
 
-from stac.item import STACItem
+from datasources.stac.item import STACItem
 
 """Mappings between API and STAC attributes"""
 stac_to_api = {

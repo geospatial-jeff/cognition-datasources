@@ -1,5 +1,7 @@
 from multiprocessing import Process, Pipe
 
+from datasources import sources
+
 class Manifest(dict):
 
     def __init__(self):
@@ -12,7 +14,10 @@ class Manifest(dict):
             yield v
 
     def load_source(self, source):
-        self.update({source.__name__: source(self)})
+        if type(source) == str:
+            self.update({source: getattr(sources, source)(self)})
+        else:
+            self.update({source.__name__: source(self)})
 
     def load_sources(self, *args):
         list(map(lambda n: self.load_source(n), args))

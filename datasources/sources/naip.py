@@ -4,12 +4,12 @@ import boto3
 import os
 from rtree import index
 
-from stac.query import STACQuery
-from stac.item import STACItem
+from datasources.stac.query import STACQuery
+from datasources.stac.item import STACItem
 from .base import Datasource
 
 s3 = boto3.client('s3')
-rtree_location = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'static', 'naip', 'naip_rtree')
+rtree_location = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'static', 'naip', 'naip_rtree')
 
 class NAIP(Datasource):
 

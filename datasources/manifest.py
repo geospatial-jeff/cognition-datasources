@@ -58,7 +58,7 @@ class Manifest(dict):
         for parent_connection in parent_connections:
             resp = parent_connection.recv()
             if resp['stac_item']:
-                if resp['source'] == 'Landsat8':
+                if resp['source'] == 'Landsat8' or resp['source'] == 'MicrosoftBuildingFootprints':
                     # Landsat8 (STAC-compliant) returns feature collection
                     response.update({resp['source']: resp['stac_item']})
                 elif resp['source'] == 'NAIP':

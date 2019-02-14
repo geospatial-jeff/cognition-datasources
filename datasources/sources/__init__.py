@@ -6,4 +6,6 @@ from .srtm import SRTM
 from .cbers import CBERS
 from .elevationtiles import ElevationTiles
 
-all = [Landsat8, NAIP, Sentinel1, Sentinel2, SRTM, CBERS, ElevationTiles]
+from .microsoft_building_footprints import MicrosoftBuildingFootprints
+
+all = [Landsat8, NAIP, Sentinel1, Sentinel2, SRTM, CBERS, ElevationTiles, MicrosoftBuildingFootprints]

@@ -108,5 +108,5 @@ class Sentinel2TestCases(unittest.TestCase):
         self.manifest.flush()
         self.manifest['Sentinel2'].search(self.geoj['geometry'], limit=20)
         response = self.manifest.execute()
-        self.assertEqual(len(response['Sentinel2']['features']), 20)
+        self.assertEqual(len(response['Sentinel2']['features']), 40)
 

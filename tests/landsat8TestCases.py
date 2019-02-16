@@ -59,13 +59,12 @@ class Landsat8TestCases(unittest.TestCase):
         self.manifest['Landsat8'].search(self.geoj['geometry'])
         self.assertEqual(len(self.manifest.searches), 1)
         self.assertEqual(type(self.manifest.searches[0][0]), sources.Landsat8)
-        self.assertEqual(list(self.manifest.searches[0][1]), ['query', 'intersects'])
 
     def test_landsat8_spatial_search(self):
         self.manifest.flush()
         self.manifest['Landsat8'].search(self.geoj['geometry'])
         response = self.manifest.execute()
-        self.assertEqual(response['Landsat8']['meta']['found'], 496)
+        self.assertEqual(response['Landsat8']['meta']['found'], 317)
 
         # Confirming output is a valid feature collection
         feature_collection = geojson.FeatureCollection([geojson.Feature(feat) for feat in response['Landsat8']['features']])

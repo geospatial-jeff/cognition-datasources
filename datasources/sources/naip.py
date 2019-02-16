@@ -9,7 +9,11 @@ from datasources.stac.item import STACItem
 from .base import Datasource
 
 s3 = boto3.client('s3')
-rtree_location = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'static', 'naip', 'naip_rtree')
+
+try:
+    rtree_location = os.environ['NAIP_RTREE_LOCATION']
+except KeyError:
+    rtree_location = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'static', 'naip', 'naip_rtree')
 
 class NAIP(Datasource):
 

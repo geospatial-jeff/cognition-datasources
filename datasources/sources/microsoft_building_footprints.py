@@ -19,7 +19,7 @@ class MicrosoftBuildingFootprints(Datasource):
         super().__init__(manifest)
         self.endpoint = 'https://services.arcgis.com/P3ePLMYs2RVChkJx/ArcGIS/rest/services/MSBFP2/FeatureServer/0/query'
 
-    def search(self, spatial, temporal=None, properties=None, **kwargs):
+    def search(self, spatial, temporal=None, properties=None, limit=1000, **kwargs):
         stac_query = STACQuery(spatial, temporal)
 
         query_body = {
@@ -56,11 +56,7 @@ class MicrosoftBuildingFootprints(Datasource):
 
         query_body.update({'where': where})
 
-        if 'limit' not in kwargs:
-            kwargs['limit'] = 1000
-
-
-        if kwargs['limit'] <= 2000:
+        if limit <= 2000:
             self.manifest.searches.append([self, query_body])
         else:
             query_body.update({'returnIdsOnly': 'true',

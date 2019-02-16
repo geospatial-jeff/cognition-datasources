@@ -20,7 +20,7 @@ class SRTM(Datasource):
                 return False
         return True
 
-    def search(self, spatial, temporal=None, properties=None, **kwargs):
+    def search(self, spatial, temporal=None, properties=None, limit=10, **kwargs):
         stac_query = STACQuery(spatial, temporal)
         bbox = stac_query.bbox()
         if (bbox[2] - bbox[0]) < 1:
@@ -32,6 +32,7 @@ class SRTM(Datasource):
         else:
             yrange = list(range(math.floor(bbox[1]), math.ceil(bbox[3])))
 
+        idx = 0
         for x in xrange:
             if -10 < x < 0:
                 xtile = 'W00'+str(abs(x))
@@ -45,35 +46,37 @@ class SRTM(Datasource):
                 xtile = 'E0'
 
             for y in yrange:
-                if -10 < y < 0:
-                    ytile = 'S0' + str(abs(y))
-                elif y <= -10:
-                    ytile = 'S' + str(abs(y))
-                elif 10 > y > 0:
-                    ytile = 'N0' + str(y)
-                elif y >= 10:
-                    ytile = 'N' + str(y)
-                else:
-                    ytile = 'S0'
+                if idx < limit:
+                    if -10 < y < 0:
+                        ytile = 'S0' + str(abs(y))
+                    elif y <= -10:
+                        ytile = 'S' + str(abs(y))
+                    elif 10 > y > 0:
+                        ytile = 'N0' + str(y)
+                    elif y >= 10:
+                        ytile = 'N' + str(y)
+                    else:
+                        ytile = 'S0'
 
-                xmax = x + 1
-                ymax = y + 1
+                    xmax = x + 1
+                    ymax = y + 1
 
-                query_body = {
-                    'xtile': xtile,
-                    'ytile': ytile,
-                    'res': 30.0,
-                    'epsg': 4326,
-                    'asset_link': os.path.join(self.endpoint, ytile, f"{ytile}{xtile}.hgt.gz"),
-                    'source': 'srtm',
-                    'bbox': [x, y, xmax, ymax],
-                    'coordinates': [[[x, ymax], [xmax, ymax], [xmax, y], [x, y], [x, ymax]]]
-                }
+                    query_body = {
+                        'xtile': xtile,
+                        'ytile': ytile,
+                        'res': 30.0,
+                        'epsg': 4326,
+                        'asset_link': os.path.join(self.endpoint, ytile, f"{ytile}{xtile}.hgt.gz"),
+                        'source': 'srtm',
+                        'bbox': [x, y, xmax, ymax],
+                        'coordinates': [[[x, ymax], [xmax, ymax], [xmax, y], [x, y], [x, ymax]]]
+                    }
 
-                if properties:
-                    query_body.update({'properties': properties})
+                    if properties:
+                        query_body.update({'properties': properties})
 
-                self.manifest.searches.append([self, query_body])
+                    self.manifest.searches.append([self, query_body])
+                    idx+=1
 
     def execute(self, query):
         stac_item = {

@@ -139,12 +139,10 @@ class NAIP(Datasource):
                 return False
         return True
 
-    def search(self, spatial, temporal=None, properties=None, **kwargs):
+    def search(self, spatial, temporal=None, properties=None, limit=10, **kwargs):
         stac_query = STACQuery(spatial, temporal)
-        candidates = self.query_naip_reference(stac_query.bbox())
+        candidates = self.query_naip_reference(stac_query.bbox())[:limit]
 
-        if 'limit' in kwargs:
-            candidates = candidates[:kwargs['limit']]
 
         for idx, candidate in enumerate(candidates):
             asset = self.NAIPAsset(candidate)

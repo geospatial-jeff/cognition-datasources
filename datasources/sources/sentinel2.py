@@ -15,10 +15,11 @@ class Sentinel2(Datasource):
         self.endpoint = 'https://sat-api-dev.developmentseed.org/stac/search/'
         self.stac_compliant = True
 
-    def search(self, spatial, temporal=None, properties=None, **kwargs):
+    def search(self, spatial, temporal=None, properties=None, limit=10, **kwargs):
         stac_query = STACQuery(spatial, temporal)
 
         query_body = {'query': {'eo:platform': {'eq': 'sentinel-2a'}},
+                      'limit': limit,
                       'intersects': json.dumps({
                           "type": "Feature",
                           "properties": {},
@@ -31,9 +32,6 @@ class Sentinel2(Datasource):
         if properties:
             for (k,v) in properties.items():
                 query_body['query'].update({k:v})
-
-        if 'limit' in kwargs:
-            query_body.update({'limit': kwargs['limit'] / 2})
 
         # Perform same query for sentinel-2a and sentinel-2b
         query_2b = copy.deepcopy(query_body)

@@ -39,7 +39,7 @@ class ElevationTiles(Datasource):
                 return False
         return True
 
-    def search(self, spatial, temporal=None, properties=None, **kwargs):
+    def search(self, spatial, temporal=None, properties=None, limit=10, **kwargs):
         stac_query = STACQuery(spatial, temporal)
 
         if 'zoom' in kwargs:
@@ -47,10 +47,7 @@ class ElevationTiles(Datasource):
         else:
             zoom = 8
 
-        tiles = mercantile.tiles(*stac_query.bbox(), zoom)
-
-        if 'limit' in kwargs:
-            tiles = list(tiles)[:kwargs['limit']]
+        tiles = list(mercantile.tiles(*stac_query.bbox(), zoom))[:limit]
 
         for tile in tiles:
             query_body = {'res': self.tile_resolution(tile),

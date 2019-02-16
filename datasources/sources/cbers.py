@@ -297,12 +297,9 @@ class CBERS(Datasource):
 
 
 
-    def search(self, spatial, temporal=None, properties=None, **kwargs):
+    def search(self, spatial, temporal=None, properties=None, limit=10, **kwargs):
         stac_query = STACQuery(spatial, temporal)
-        path_rows = self.query_cbers_reference(stac_query.bbox())
-
-        if 'limit' in kwargs:
-            path_rows = path_rows[:kwargs['limit']]
+        path_rows = self.query_cbers_reference(stac_query.bbox())[:limit]
 
         for candidate in path_rows:
             query_body = {

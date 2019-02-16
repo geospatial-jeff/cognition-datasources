@@ -43,11 +43,11 @@ class Sentinel1(Datasource):
         self.api = SentinelAPI(os.getenv('COPERNICUS_USER'), os.getenv('COPERNICUS_PASSWORD'))
         self.api.api_url = "https://scihub.copernicus.eu/dhus/"
 
-    def search(self, spatial, temporal=None, properties=None, **kwargs):
+    def search(self, spatial, temporal=None, properties=None, limit=10, **kwargs):
         stac_query = STACQuery(spatial, temporal)
 
         query_body = {'area': stac_query.wkt(),
-                      'limit': 10,
+                      'limit': limit,
                       'platformname': 'Sentinel-1',
                       }
 
@@ -60,8 +60,6 @@ class Sentinel1(Datasource):
                 api_props.update(stac_to_api[prop](properties))
             query_body.update(api_props)
 
-        if 'limit' in kwargs:
-            query_body.update({'limit': kwargs['limit']})
 
         self.manifest.searches.append([self,query_body])
 

@@ -90,7 +90,7 @@ class SRTM(Datasource):
                 'coordinates': query['coordinates']
             },
             'properties': {
-                'datetime': None,
+                'datetime': 'null',
                 'eo:gsd': query['res'],
                 'eo:epsg': query['epsg'],
                 'eo:instrument': query['source'],

@@ -88,7 +88,7 @@ class ElevationTiles(Datasource):
                 ]
             },
             "properties": {
-                "datetime": None,
+                "datetime": 'null',
                 "eo:gsd": query['res'],
                 "eo:epsg": query['epsg'],
                 "eo:instrument": source,

@@ -26,7 +26,10 @@ def project_info(project_name):
         except:
             year = int(splits[-1][:-1])
     else:
-        year = int(splits[-1][:-1])
+        try:
+            year = int(splits[-1][:-1])
+        except:
+            year = None
 
     try:
         response = client.get_object(Bucket=bucket, Key=os.path.join(project_name, 'boundary.json'))
@@ -55,4 +58,4 @@ def build_database():
                            "geom": json.dumps(resp['geojson'])
                        })
 
-build_database()
+# build_database()

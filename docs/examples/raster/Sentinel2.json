@@ -1,0 +1,326 @@
+{
+  "type": "Feature",
+  "id": "S2A_12SWH_20190204_0",
+  "bbox": [
+    -110.92336695539225,
+    37.852838634285284,
+    -109.73505156481204,
+    38.84841603166308
+  ],
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          -109.75214580386293,
+          37.852838634285284
+        ],
+        [
+          -110.92336695539225,
+          37.859426035612834
+        ],
+        [
+          -110.92336641414785,
+          37.85994879584942
+        ],
+        [
+          -110.92313811272327,
+          37.860849958296
+        ],
+        [
+          -110.92290980572099,
+          37.86175112015563
+        ],
+        [
+          -110.92268149314064,
+          37.86265228142827
+        ],
+        [
+          -110.92222485124424,
+          37.86445460221237
+        ],
+        [
+          -110.92176837760435,
+          37.86607665870311
+        ],
+        [
+          -110.76844234167848,
+          38.393657660211495
+        ],
+        [
+          -110.74920460569025,
+          38.45976779984787
+        ],
+        [
+          -110.71016254137204,
+          38.592155062045045
+        ],
+        [
+          -110.63422240499384,
+          38.84805629729614
+        ],
+        [
+          -110.63399008593258,
+          38.84841603166308
+        ],
+        [
+          -109.73505156481204,
+          38.842139787815405
+        ],
+        [
+          -109.75214580386293,
+          37.852838634285284
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "collection": "sentinel-2-l1c",
+    "eo:gsd": 10,
+    "eo:instrument": "MSI",
+    "eo:off_nadir": 0,
+    "eo:bands": [
+      {
+        "full_width_half_max": 0.027,
+        "center_wavelength": 0.4439,
+        "name": "B01",
+        "gsd": 60,
+        "common_name": "coastal"
+      },
+      {
+        "full_width_half_max": 0.098,
+        "center_wavelength": 0.4966,
+        "name": "B02",
+        "gsd": 10,
+        "common_name": "blue"
+      },
+      {
+        "full_width_half_max": 0.045,
+        "center_wavelength": 0.56,
+        "name": "B03",
+        "gsd": 10,
+        "common_name": "green"
+      },
+      {
+        "full_width_half_max": 0.038,
+        "center_wavelength": 0.6645,
+        "name": "B04",
+        "gsd": 10,
+        "common_name": "red"
+      },
+      {
+        "full_width_half_max": 0.019,
+        "center_wavelength": 0.7039,
+        "name": "B05",
+        "gsd": 20
+      },
+      {
+        "full_width_half_max": 0.018,
+        "center_wavelength": 0.7402,
+        "name": "B06",
+        "gsd": 20
+      },
+      {
+        "full_width_half_max": 0.028,
+        "center_wavelength": 0.7825,
+        "name": "B07",
+        "gsd": 20
+      },
+      {
+        "full_width_half_max": 0.145,
+        "center_wavelength": 0.8351,
+        "name": "B08",
+        "gsd": 10,
+        "common_name": "nir"
+      },
+      {
+        "full_width_half_max": 0.033,
+        "center_wavelength": 0.8648,
+        "name": "B8A",
+        "gsd": 20
+      },
+      {
+        "full_width_half_max": 0.026,
+        "center_wavelength": 0.945,
+        "name": "B09",
+        "gsd": 60
+      },
+      {
+        "full_width_half_max": 0.075,
+        "center_wavelength": 1.3735,
+        "name": "B10",
+        "gsd": 60,
+        "common_name": "cirrus"
+      },
+      {
+        "full_width_half_max": 0.143,
+        "center_wavelength": 1.6137,
+        "name": "B11",
+        "gsd": 20,
+        "common_name": "swir16"
+      },
+      {
+        "full_width_half_max": 0.242,
+        "center_wavelength": 2.22024,
+        "name": "B12",
+        "gsd": 20,
+        "common_name": "swir22"
+      }
+    ],
+    "datetime": "2019-02-04T18:13:32.691000+00:00",
+    "eo:platform": "sentinel-2a",
+    "eo:cloud_cover": 99.71,
+    "sentinel:utm_zone": 12,
+    "sentinel:latitude_band": "S",
+    "sentinel:grid_square": "WH",
+    "sentinel:sequence": "0",
+    "sentinel:product_id": "S2A_MSIL1C_20190204T180531_N0207_R041_T12SWH_20190204T195949",
+    "eo:epsg": 32612
+  },
+  "assets": {
+    "thumbnail": {
+      "title": "Thumbnail",
+      "href": "https://roda.sentinel-hub.com/sentinel-s2-l1c/tiles/12/S/WH/2019/2/4/0/preview.jpg"
+    },
+    "info": {
+      "title": "Basic JSON metadata",
+      "href": "https://roda.sentinel-hub.com/sentinel-s2-l1c/tiles/12/S/WH/2019/2/4/0/tileInfo.json"
+    },
+    "metadata": {
+      "title": "Complete XML metadata",
+      "href": "https://roda.sentinel-hub.com/sentinel-s2-l1c/tiles/12/S/WH/2019/2/4/0/metadata.xml"
+    },
+    "tki": {
+      "title": "True color image",
+      "type": "image/jp2",
+      "eo:bands": [
+        3,
+        2,
+        1
+      ],
+      "href": "https://sentinel-s2-l1c.s3.amazonaws.com/tiles/12/S/WH/2019/2/4/0/TKI.jp2"
+    },
+    "B01": {
+      "title": "Band 1 (coastal)",
+      "type": "image/jp2",
+      "eo:bands": [
+        0
+      ],
+      "href": "https://sentinel-s2-l1c.s3.amazonaws.com/tiles/12/S/WH/2019/2/4/0/B01.jp2"
+    },
+    "B02": {
+      "title": "Band 2 (blue)",
+      "type": "image/jp2",
+      "eo:bands": [
+        2
+      ],
+      "href": "https://sentinel-s2-l1c.s3.amazonaws.com/tiles/12/S/WH/2019/2/4/0/B02.jp2"
+    },
+    "B03": {
+      "title": "Band 3 (green)",
+      "type": "image/jp2",
+      "eo:bands": [
+        2
+      ],
+      "href": "https://sentinel-s2-l1c.s3.amazonaws.com/tiles/12/S/WH/2019/2/4/0/B03.jp2"
+    },
+    "B04": {
+      "title": "Band 4 (red)",
+      "type": "image/jp2",
+      "eo:bands": [
+        3
+      ],
+      "href": "https://sentinel-s2-l1c.s3.amazonaws.com/tiles/12/S/WH/2019/2/4/0/B04.jp2"
+    },
+    "B05": {
+      "title": "Band 5",
+      "type": "image/jp2",
+      "eo:bands": [
+        4
+      ],
+      "href": "https://sentinel-s2-l1c.s3.amazonaws.com/tiles/12/S/WH/2019/2/4/0/B05.jp2"
+    },
+    "B06": {
+      "title": "Band 6",
+      "type": "image/jp2",
+      "eo:bands": [
+        5
+      ],
+      "href": "https://sentinel-s2-l1c.s3.amazonaws.com/tiles/12/S/WH/2019/2/4/0/B06.jp2"
+    },
+    "B07": {
+      "title": "Band 7",
+      "type": "image/jp2",
+      "eo:bands": [
+        6
+      ],
+      "href": "https://sentinel-s2-l1c.s3.amazonaws.com/tiles/12/S/WH/2019/2/4/0/B07.jp2"
+    },
+    "B08": {
+      "title": "Band 8 (nir)",
+      "type": "image/jp2",
+      "eo:bands": [
+        7
+      ],
+      "href": "https://sentinel-s2-l1c.s3.amazonaws.com/tiles/12/S/WH/2019/2/4/0/B08.jp2"
+    },
+    "B8A": {
+      "title": "Band 8A",
+      "type": "image/jp2",
+      "eo:bands": [
+        8
+      ],
+      "href": "https://sentinel-s2-l1c.s3.amazonaws.com/tiles/12/S/WH/2019/2/4/0/B08.jp2"
+    },
+    "B09": {
+      "title": "Band 9",
+      "type": "image/jp2",
+      "eo:bands": [
+        9
+      ],
+      "href": "https://sentinel-s2-l1c.s3.amazonaws.com/tiles/12/S/WH/2019/2/4/0/B09.jp2"
+    },
+    "B10": {
+      "title": "Band 10 (cirrus)",
+      "type": "image/jp2",
+      "eo:bands": [
+        10
+      ],
+      "href": "https://sentinel-s2-l1c.s3.amazonaws.com/tiles/12/S/WH/2019/2/4/0/B10.jp2"
+    },
+    "B11": {
+      "title": "Band 11 (swir16)",
+      "type": "image/jp2",
+      "eo:bands": [
+        11
+      ],
+      "href": "https://sentinel-s2-l1c.s3.amazonaws.com/tiles/12/S/WH/2019/2/4/0/B11.jp2"
+    },
+    "B12": {
+      "title": "Band 12 (swir22)",
+      "type": "image/jp2",
+      "eo:bands": [
+        12
+      ],
+      "href": "https://sentinel-s2-l1c.s3.amazonaws.com/tiles/12/S/WH/2019/2/4/0/B11.jp2"
+    }
+  },
+  "links": [
+    {
+      "rel": "self",
+      "href": "https://sat-api-dev.developmentseed.org/collections/sentinel-2-l1c/items/S2A_12SWH_20190204_0"
+    },
+    {
+      "rel": "parent",
+      "href": "https://sat-api-dev.developmentseed.org/collections/sentinel-2-l1c"
+    },
+    {
+      "rel": "collection",
+      "href": "https://sat-api-dev.developmentseed.org/collections/sentinel-2-l1c"
+    },
+    {
+      "rel": "root",
+      "href": "https://sat-api-dev.developmentseed.org/stac"
+    }
+  ]
+}

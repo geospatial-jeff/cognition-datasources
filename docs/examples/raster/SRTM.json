@@ -1,0 +1,51 @@
+{
+  "id": "srtm-skadi-W110-N38",
+  "type": "Feature",
+  "bbox": [
+    -110,
+    38,
+    -109,
+    39
+  ],
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          -110,
+          39
+        ],
+        [
+          -109,
+          39
+        ],
+        [
+          -109,
+          38
+        ],
+        [
+          -110,
+          38
+        ],
+        [
+          -110,
+          39
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "datetime": "null",
+    "eo:gsd": 30.0,
+    "eo:epsg": 4326,
+    "eo:instrument": "srtm",
+    "legacy:x": "W110",
+    "legacy:y": "N38"
+  },
+  "assets": {
+    "tile": {
+      "href": "https://s3.amazonaws.com/elevation-tiles-prod/skadi/N38/N38W110.hgt.gz",
+      "title": "SRTM Skadi Tile"
+    }
+  }
+}

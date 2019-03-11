@@ -26,7 +26,7 @@ def project_info(project_name):
         except:
             year = int(splits[-1][:-1])
     else:
-        year = splits[-1][:-1]
+        year = int(splits[-1][:-1])
 
     try:
         response = client.get_object(Bucket=bucket, Key=os.path.join(project_name, 'boundary.json'))
@@ -35,9 +35,6 @@ def project_info(project_name):
     except:
         print("WARNING!! No geometry found for the {} project".format(project_name))
         return None
-
-
-
 
 def build_database():
     idx = index.Rtree(rtree_location)

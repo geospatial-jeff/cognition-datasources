@@ -147,6 +147,25 @@
 | legacy:x | str | 'W102' |
 | legacy:y | str | 'N44' |
 
+## USGS3DEP
+
+| Parameter | Status |
+| ----------| ------ |
+| Spatial | :heavy_check_mark: |
+| Temporal | :heavy_check_mark: |
+| Properties | :heavy_check_mark: |
+| **kwargs | [limit] |
+
+##### Properties
+| Property | Type | Example |
+|--------------------------|-------|-------------|
+| eo:epsg | int | 3857 |
+| pc:type | str | 'lidar' |
+| pc:points | int | 100000000 |
+| pc:encoding | str | 'laszip' |
+| legacy:span | int | 256 |
+
+
 ##### Notes
 - The source API doesn't support temporal data.  Can search with temporal but it is not honored.
 

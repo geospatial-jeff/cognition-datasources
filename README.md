@@ -53,4 +53,5 @@ Read the [quickstart](./docs/quickstart.ipynb) and [documentation](./docs).
 | Sentinel1 | [Copernicus Open Access Hub](https://scihub.copernicus.eu/) | False | Sends requests to [CopernicusAPIHub](https://scihub.copernicus.eu/twiki/do/view/SciHubWebPortal/APIHubDescription) with help of [sentinelsat](https://github.com/sentinelsat/sentinelsat). |
 | Sentinel2 | [AWS Earth: Sentinel2](https://registry.opendata.aws/sentinel-2/) | True | Sends requests to [sat-api](https://github.com/sat-utils/sat-api). |
 | SRTM | [AWS: Terrain Tiles](https://registry.opendata.aws/terrain-tiles/) | False | Does not send any requests. |
+| USGS 3DEP | [AWS: USGS 3DEP](https://registry.opendata.aws/usgs-lidar/) | False | Sends request to AWS S3 Bucket. |
 | Microsoft Building Footprints | [Microsoft](https://github.com/Microsoft/USBuildingFootprints) / [ESRI](https://www.arcgis.com/home/item.html?id=f40326b0dea54330ae39584012807126) | False | Sends requests to ESRI Feature Layer |

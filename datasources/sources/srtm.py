@@ -8,6 +8,8 @@ from datasources.stac.query import STACQuery
 
 class SRTM(Datasource):
 
+    tags = ['Raster', 'Elevation']
+
     def __init__(self, manifest):
         super().__init__(manifest)
         self.endpoint = 'https://s3.amazonaws.com/elevation-tiles-prod/skadi'

@@ -15,6 +15,8 @@ symbols = {
 
 class MicrosoftBuildingFootprints(Datasource):
 
+    tags = ['Vector']
+
     def __init__(self, manifest):
         super().__init__(manifest)
         self.endpoint = 'https://services.arcgis.com/P3ePLMYs2RVChkJx/ArcGIS/rest/services/MSBFP2/FeatureServer/0/query'

@@ -17,6 +17,8 @@ except KeyError:
 
 class NAIP(Datasource):
 
+    tags = ['EO', 'Aerial', 'Raster']
+
     class NAIPAsset(object):
 
         def __init__(self, asset):

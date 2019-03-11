@@ -9,6 +9,9 @@ from datasources.stac.query import STACQuery
 
 class ElevationTiles(Datasource):
 
+    tags = ['Raster', 'Elevation']
+
+
     @staticmethod
     def tile_resolution(tile):
         bounds = mercantile.xy_bounds(tile)

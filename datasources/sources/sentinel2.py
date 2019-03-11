@@ -11,6 +11,8 @@ from .base import Datasource
 class Sentinel2(Datasource):
 
     stac_compliant = True
+    tags = ['EO', 'MS', 'Satellite', 'Raster']
+
 
     def __init__(self, manifest):
         super().__init__(manifest)

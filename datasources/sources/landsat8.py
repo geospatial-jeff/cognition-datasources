@@ -7,6 +7,7 @@ from .base import Datasource
 class Landsat8(Datasource):
 
     stac_compliant = True
+    tags = ['EO', 'MS', 'Satellite', 'Raster']
 
     def __init__(self, manifest):
         super().__init__(manifest)

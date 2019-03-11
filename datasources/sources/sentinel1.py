@@ -38,6 +38,8 @@ api_to_stac = {
 
 class Sentinel1(Datasource):
 
+    tags = ['SAR', 'Satellite', 'Raster']
+
     def __init__(self, manifest):
         super().__init__(manifest)
         # self.api = SentinelAPI(os.getenv('COPERNICUS_USER'), os.getenv('COPERNICUS_PASSWORD'))

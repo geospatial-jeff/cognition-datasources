@@ -24,6 +24,8 @@ s3 = boto3.client('s3')
 
 class CBERS(Datasource):
 
+    tags = ['EO', 'Satellite', 'Raster']
+
     @staticmethod
     def query_cbers_reference(bbox):
         idx = index.Rtree(rtree_location)

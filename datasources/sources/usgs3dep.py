@@ -20,6 +20,8 @@ bucket = 'usgs-lidar-public'
 
 class USGS3DEP(Datasource):
 
+    tags = ['Elevation', 'Raster']
+
     @staticmethod
     def query_3dep_reference(bbox):
         idx = index.Rtree(rtree_location)

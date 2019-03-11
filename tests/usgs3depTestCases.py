@@ -56,7 +56,7 @@ class USGS3DEPTestCases(unittest.TestCase):
         self.manifest.flush()
         # Confirming that a simple search works internally
         self.manifest['USGS3DEP'].search(self.geoj['geometry'])
-        self.assertEqual(len(self.manifest.searches), 2)
+        self.assertEqual(len(self.manifest.searches), 4)
         self.assertEqual(type(self.manifest.searches[0][0]), sources.USGS3DEP)
 
     def test_3dep_spatial_search(self):

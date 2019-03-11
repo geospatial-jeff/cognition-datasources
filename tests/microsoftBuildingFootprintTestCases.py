@@ -87,7 +87,7 @@ class MicrosoftBuildingFootprintTestCases(unittest.TestCase):
         # Querying with eo:epsg (changes the spatial reference of returned features)
         self.manifest['MicrosoftBuildingFootprints'].search(self.geoj['geometry'], properties={'eo:epsg': {'eq': 32611}})
         response = self.manifest.execute()
-        self.assertEqual(response['MicrosoftBuildingFootprints']['crs']['properties']['name'], 'EPSG:32611')
+        [self.assertEqual(x['properties']['eo:epsg'], 32611) for x in response['MicrosoftBuildingFootprints']['features']]
 
     def test_msbf_limit(self):
         """

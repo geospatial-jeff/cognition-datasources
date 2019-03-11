@@ -61,7 +61,8 @@ class MicrosoftBuildingFootprints(Datasource):
         else:
             query_body.update({'returnIdsOnly': 'true',
                                'returnUniqueIdsOnly': 'true'})
-            response = self.execute(query_body)
+            response = self.execute(query_body, objectid=True)
+            print(response)
 
             feature_query = {'where': query_body['where'],
                              'objectIds': response['properties']['objectIds'],
@@ -75,10 +76,9 @@ class MicrosoftBuildingFootprints(Datasource):
 
             self.manifest.searches.append([self, feature_query])
 
-    def execute(self, query):
+    def execute(self, query, objectid=False):
         r = requests.get(self.endpoint, params=query)
         data = r.json()
-
 
         for feat in data['features']:
             stac_properties = {
@@ -95,4 +95,7 @@ class MicrosoftBuildingFootprints(Datasource):
             yvals = [y[1] for y in feat['geometry']['coordinates'][0]]
             feat.update({'bbox': [min(xvals), min(yvals), max(xvals), max(yvals)]})
 
-        return data
+        if objectid:
+            return data
+        else:
+            return data['features']

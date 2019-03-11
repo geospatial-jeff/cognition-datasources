@@ -40,7 +40,8 @@ class Sentinel1(Datasource):
 
     def __init__(self, manifest):
         super().__init__(manifest)
-        self.api = SentinelAPI(os.getenv('COPERNICUS_USER'), os.getenv('COPERNICUS_PASSWORD'))
+        # self.api = SentinelAPI(os.getenv('COPERNICUS_USER'), os.getenv('COPERNICUS_PASSWORD'))
+        self.api = SentinelAPI('geospatialjeff', 'Alphadelt123@#')
         self.api.api_url = "https://scihub.copernicus.eu/dhus/"
 
     def search(self, spatial, temporal=None, properties=None, limit=10, **kwargs):
@@ -68,17 +69,21 @@ class Sentinel1(Datasource):
         products = self.api.query(**query)
         response = self.api.to_geojson(products)
 
-        stac_items = {
-            "type": "FeatureCollection",
-            "features": []
-        }
+        stac_items = []
 
         for feat in response['features']:
             stac_props = {}
 
             # Calculate bbox from coords
-            xcoords = [x[0] for x in feat['geometry']['coordinates'][0]]
-            ycoords = [y[1] for y in feat['geometry']['coordinates'][0]]
+            if feat['geometry']['type'] == 'MultiPolygon':
+                xcoords = [x[0] for x in feat['geometry']['coordinates'][0][0]]
+                ycoords = [y[1] for y in feat['geometry']['coordinates'][0][0]]
+                feat['geometry']['coordinates'] = feat['geometry']['coordinates'][0]
+                feat['geometry']['type'] = 'Polygon'
+
+            else:
+                xcoords = [x[0] for x in feat['geometry']['coordinates'][0]]
+                ycoords = [y[1] for y in feat['geometry']['coordinates'][0]]
             feat.update({"bbox": [min(xcoords), min(ycoords), max(xcoords), max(ycoords)]})
 
             # Find EPSG of WGS84 UTM zone from centroid of bbox
@@ -106,50 +111,6 @@ class Sentinel1(Datasource):
 
             # Validate STAC item
             STACItem.load(feat)
-            stac_items['features'].append(feat)
-
-        return stac_items
-
-
-
-
-
-        # for feat in response['features']:
-        #     properties = feat['properties']
-        #     stac_props = {}
-        #     for prop in properties:
-        #         if prop in list(api_to_stac):
-        #             stac_props.update(api_to_stac[prop](properties))
-        #
-        #
-        #     # Replace properties with new STAC properties
-        #     feat['properties'] = stac_props
-        #
-        #     # Move assets from properties to feature
-        #     feat.update({"assets": {"analytic": stac_props.pop("asset_analytic"),
-        #                             "thumbnail": stac_props.pop("asset_thumbnail")}})
-        #
-        #     # Update ID
-        #     feat.update({"id": stac_props.pop("id")})
-        #
-        #     # Calculate bbox from coords
-        #     xcoords = [x[0] for x in feat['geometry']['coordinates'][0]]
-        #     ycoords = [y[1] for y in feat['geometry']['coordinates'][0]]
-        #     feat.update({"bbox": [min(xcoords), min(ycoords), max(xcoords), max(ycoords)]})
-        #
-        #     # Find EPSG of WGS84 UTM zone from centroid of bbox
-        #     centroid = [(feat['bbox'][1] + feat['bbox'][3]) / 2, (feat['bbox'][0] + feat['bbox'][2]) / 2]
-        #     utm_zone = utm.from_latlon(*centroid)
-        #     epsg = '32' + '5' + str(utm_zone[2]) if centroid[0] < 0 else '32' + '6' + str(utm_zone[2])
-        #     feat['properties'].update({'eo:epsg': int(epsg)})
-        #
-        #     if epsg_check:
-        #         if epsg_check != int(epsg):
-        #             print("Bad EPSG: {}".format(epsg))
-        #             continue
-        #
-        #     # Validate the STAC item
-        #     STACItem.load(feat)
-        #     stac_items['features'].append(feat)
+            stac_items.append(feat)
 
         return stac_items

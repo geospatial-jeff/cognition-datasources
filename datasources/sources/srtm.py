@@ -107,4 +107,4 @@ class SRTM(Datasource):
             if not self.check_properties(stac_item['properties'], query['properties']):
                 return None
 
-        return stac_item
+        return [stac_item]

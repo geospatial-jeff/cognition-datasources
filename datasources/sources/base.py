@@ -1,8 +1,10 @@
 
 class Datasource(object):
 
+    stac_compliant = False
+
     def __init__(self, manifest):
-        self.stac_compliant = False
+        # self.stac_compliant = False
         self.manifest = manifest
 
     def search(self, spatial, temporal, properties):
@@ -20,7 +22,7 @@ class Datasource(object):
 
     def execute_multi(self, query_body, conn):
         response = self.execute(query_body)
-        conn.send({'stac_item': response, 'source': self.__class__.__name__})
+        conn.send({'stac_items': response, 'source': self.__class__.__name__})
         conn.close()
 
     def load_spatial(self, spatial, bbox=False):

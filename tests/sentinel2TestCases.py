@@ -66,6 +66,8 @@ class Sentinel2TestCases(unittest.TestCase):
         response = self.manifest.execute()
         self.assertEqual(list(response), ['Sentinel2'])
 
+        print(response)
+
         # Confirming output is a valid feature collection
         feature_collection = geojson.FeatureCollection([geojson.Feature(feat) for feat in response['Sentinel2']['features']])
         self.assertEqual(len(feature_collection.errors()), 0)
@@ -108,5 +110,5 @@ class Sentinel2TestCases(unittest.TestCase):
         self.manifest.flush()
         self.manifest['Sentinel2'].search(self.geoj['geometry'], limit=20)
         response = self.manifest.execute()
-        self.assertEqual(len(response['Sentinel2']['features']), 40)
+        self.assertEqual(len(response['Sentinel2']['features']), 20)
 

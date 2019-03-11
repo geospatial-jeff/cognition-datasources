@@ -64,7 +64,7 @@ class Landsat8TestCases(unittest.TestCase):
         self.manifest.flush()
         self.manifest['Landsat8'].search(self.geoj['geometry'])
         response = self.manifest.execute()
-        self.assertEqual(response['Landsat8']['meta']['found'], 317)
+        self.assertEqual(response['Landsat8']['meta']['found'], 315)
 
         # Confirming output is a valid feature collection
         feature_collection = geojson.FeatureCollection([geojson.Feature(feat) for feat in response['Landsat8']['features']])

@@ -6,10 +6,11 @@ from .base import Datasource
 
 class Landsat8(Datasource):
 
+    stac_compliant = True
+
     def __init__(self, manifest):
         super().__init__(manifest)
         self.endpoint = 'https://sat-api-dev.developmentseed.org/stac/search/'
-        self.stac_compliant = True
 
     def search(self, spatial, temporal=None, properties=None, limit=10, **kwargs):
         stac_query = STACQuery(spatial, temporal)

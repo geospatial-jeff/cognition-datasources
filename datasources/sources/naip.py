@@ -120,7 +120,6 @@ class NAIP(Datasource):
 
     def __init__(self, manifest):
         super().__init__(manifest)
-        self.stac_compliant = False
         self.stac_mapping = {
             'eo:gsd': 'res',
             'eo:epsg': 'utm',
@@ -262,4 +261,8 @@ class NAIP(Datasource):
                     return None
         # end = time.time()
         # print("Runtime: {}".format(end-start))
-        return STACItem.load(stac_item)
+
+        # Validate item
+        STACItem.load(stac_item)
+
+        return [stac_item]

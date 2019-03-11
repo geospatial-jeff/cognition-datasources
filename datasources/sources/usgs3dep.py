@@ -36,7 +36,6 @@ class USGS3DEP(Datasource):
 
     def __init__(self, manifest):
         super().__init__(manifest)
-        self.stac_compliant = False
 
     def search(self, spatial, temporal=None, properties=None, limit=10, **kwargs):
         names = []
@@ -84,6 +83,6 @@ class USGS3DEP(Datasource):
 
         if "properties" in list(query):
             if self.check_properties(stac_item['properties'], query['properties']):
-                return stac_item
+                return [stac_item]
         else:
-            return stac_item
+            return [stac_item]

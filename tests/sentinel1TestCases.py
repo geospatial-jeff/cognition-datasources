@@ -64,6 +64,7 @@ class Sentinel1TestCases(unittest.TestCase):
         self.manifest.flush()
         self.manifest['Sentinel1'].search(self.geoj['geometry'])
         response = self.manifest.execute()
+        print(response)
         self.assertEqual(list(response), ['Sentinel1'])
 
         # Confirming output is a valid feature collection
@@ -72,7 +73,8 @@ class Sentinel1TestCases(unittest.TestCase):
 
         # Confirming that each output feature intersects the input
         for feat in response['Sentinel1']['features']:
-            asset_geom = Polygon(feat['geometry']['coordinates'][0])
+            # asset_geom = Polygon(feat['geometry']['coordinates'][0])
+            asset_geom = Polygon([[feat['bbox'][0], feat['bbox'][3]], [feat['bbox'][2], feat['bbox'][3]], [feat['bbox'][2], feat['bbox'][1]], [feat['bbox'][0], feat['bbox'][1]], [feat['bbox'][0], feat['bbox'][3]]])
             self.assertEqual(asset_geom.intersects(self.geoj_geom), True)
 
     def test_sentinel_spatio_temporal_search(self):

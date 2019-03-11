@@ -430,4 +430,4 @@ class CBERS(Datasource):
 
             valid_list.append(stac_item)
 
-        return {'features': valid_list}
+        return valid_list

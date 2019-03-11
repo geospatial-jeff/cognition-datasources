@@ -2,8 +2,8 @@ import os
 import json
 from rtree import index
 
-rtree_location = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'datasources', 'static', 'cbers', 'cbers_rtree')
-data_location = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'datasources', 'static', 'cbers', 'cbers_reference.geojson')
+rtree_location = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'static', 'cbers', 'cbers_rtree')
+data_location = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'static', 'cbers', 'cbers_reference.geojson')
 
 def build_database():
     idx = index.Rtree(rtree_location)

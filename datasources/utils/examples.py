@@ -1,5 +1,6 @@
 import json
 import os
+import click
 
 from stac_validator.stac_validator import StacValidate
 
@@ -8,7 +9,7 @@ from datasources import Manifest
 
 # STAC doesn't work with vector (yet)
 sources = list(set(all) - set(collections.vector))
-example_dir = '../../docs/examples/raster'
+example_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../../docs/examples/raster')
 
 def build_examples():
     manifest = Manifest()

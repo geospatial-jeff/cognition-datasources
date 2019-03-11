@@ -3,6 +3,7 @@ import time
 import click
 
 from datasources import Manifest, sources
+from datasources.utils.examples import build_examples, validate_examples
 
 
 @click.group(short_help="Cognition datasource query")
@@ -58,20 +59,14 @@ def search(spatial, start_date, end_date, properties, datasource, debug, output)
 
     return 0
 
-
-
-
-
-
-
-    # print(temporal)
-    #
-    # manifest = Manifest()
-    # manifest.load_source('Landsat8')
-    # manifest['Landsat8'].search(spatial, temporal=temporal)
-    #
-    # response = manifest.execute()
-    # print(response)
+@cognition_datasources.command(name='examples')
+@click.option('--build/--no-build', default=False)
+@click.option('--validate//no-validate', default=False)
+def examples(build, validate):
+    if build:
+        build_examples()
+    if validate:
+        validate_examples()
 
 
 

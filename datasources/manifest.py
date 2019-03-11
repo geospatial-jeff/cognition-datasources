@@ -62,14 +62,14 @@ class Manifest(dict):
                     # Landsat8 (STAC-compliant) returns feature collection
                     response.update({resp['source']: resp['stac_item']})
                 elif resp['source'] == 'NAIP':
-                    # NAIP (not STAC-compliant) returns individual STAC features
+                    # NAIP/3DEP (not STAC-compliant) returns individual STAC features
                     response[resp['source']]['features'].append(resp['stac_item'].stac_item)
                 elif resp['source'] == 'Sentinel2':
                     # Sentinel2 (STAC-compliant) returns feature collection
                     [response[resp['source']]['features'].append(x) for x in resp['stac_item']['features']]
                 elif resp['source'] == 'Sentinel1':
                     [response[resp['source']]['features'].append(x) for x in resp['stac_item']['features']]
-                elif resp['source'] == 'ElevationTiles' or resp['source'] == 'SRTM':
+                elif resp['source'] == 'ElevationTiles' or resp['source'] == 'SRTM' or resp['source'] == 'USGS3DEP':
                    response[resp['source']]['features'].append(resp['stac_item'])
                 elif resp['source'] == 'CBERS':
                     [response[resp['source']]['features'].append(x) for x in resp['stac_item']['features']]

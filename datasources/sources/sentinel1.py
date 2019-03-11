@@ -42,8 +42,7 @@ class Sentinel1(Datasource):
 
     def __init__(self, manifest):
         super().__init__(manifest)
-        # self.api = SentinelAPI(os.getenv('COPERNICUS_USER'), os.getenv('COPERNICUS_PASSWORD'))
-        self.api = SentinelAPI('geospatialjeff', 'Alphadelt123@#')
+        self.api = SentinelAPI(os.getenv('COPERNICUS_USER'), os.getenv('COPERNICUS_PASSWORD'))
         self.api.api_url = "https://scihub.copernicus.eu/dhus/"
 
     def search(self, spatial, temporal=None, properties=None, limit=10, **kwargs):

@@ -88,3 +88,36 @@ class USGS3DEP(Datasource):
                 return [stac_item]
         else:
             return [stac_item]
+
+    def example(self):
+        geoj = {
+            "type": "Polygon",
+            "coordinates": [
+                [
+                    [
+                        -109.79736328125,
+                        38.51378825951165
+                    ],
+                    [
+                        -109.0283203125,
+                        38.51378825951165
+                    ],
+                    [
+                        -109.0283203125,
+                        39.027718840211605
+                    ],
+                    [
+                        -109.79736328125,
+                        39.027718840211605
+                    ],
+                    [
+                        -109.79736328125,
+                        38.51378825951165
+                    ]
+                ]
+            ]
+        }
+
+        self.search(geoj)
+        response = self.manifest.execute()
+        return response

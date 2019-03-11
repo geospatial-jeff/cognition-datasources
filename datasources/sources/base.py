@@ -42,3 +42,9 @@ class Datasource(object):
         Method to load STAC kwargs argument as API compatible argument
         """
         raise NotImplementedError
+
+    def example(self):
+        """
+        Method to return an example response
+        """
+        raise NotImplementedError

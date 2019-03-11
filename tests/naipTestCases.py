@@ -58,7 +58,7 @@ class NAIPTestCases(unittest.TestCase):
 
         # Confirming that a simple search works internally
         self.manifest['NAIP'].search(self.geoj['geometry'])
-        self.assertEqual(len(self.manifest.searches), 175)
+        self.assertEqual(len(self.manifest.searches), 10)
 
         self.assertEqual(type(self.manifest.searches[0][0]), sources.NAIP)
         self.assertEqual(list(self.manifest.searches[0][1]), ['key', 'utm', 'bucket', 'datetime', 'resolution', 'md_key'])

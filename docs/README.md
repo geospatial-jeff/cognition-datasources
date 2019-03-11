@@ -53,7 +53,8 @@ The following table shows which STAC properties are available when querying each
 | NAIP | [eo:gsd, eo:epsg, eo:instrument] |  |  |
 | Sentinel1 | [eo:epsg, sar:polarization, sar:absolute_orbit, sar:type, sar:instrument_mode] | [legacy:lastorbitnumber, legacy:swathidentifier] | [limit] |
 | Sentinel2 | [eo:gsd, eo:epsg, eo:instrument, eo:platform, eo:cloud_cover, eo:instrument, sentinel:utm_zone, sentinel:latitude_band, sentinel:grid_square, sentinel:sequence, sentinel:product_id] |  | [limit] |
-| SRTM | [eo:gsd, eo:epsg, eo:instrument] | [legacy:x, legacy:y] | [limit] 
+| SRTM | [eo:gsd, eo:epsg, eo:instrument] | [legacy:x, legacy:y] | [limit] |
+| USGS 3DEP | [eo:epsg, pc:count, pc:type, pc:encoding] | [legacy:scan] | [limit] |
 | Microsoft Building Footprints | [eo:epsg] | [legacy:area, legacy:length, legacy:state] | [limit] |
 
 ### Response

@@ -40,6 +40,13 @@ response = manifest.execute()
 cognition-datasources search xmin ymin xmax ymax --start-date "2018-10-30" --end-date "2018-12-31" -d Landsat8 -d SRTM --output response.json
 ```
 
+## Testing
+Unittests for each datasource are found in [tests](/tests/).  The library provides a CLI for creating and validating [example STAC Items](/docs/examples/) for each datasource.
+
+```
+cognition-datasources examples --build --validate
+```
+
 ## Documentation
 Read the [quickstart](./docs/quickstart.ipynb) and [documentation](./docs).
 

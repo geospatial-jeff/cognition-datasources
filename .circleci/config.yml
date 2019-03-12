@@ -32,7 +32,7 @@ jobs:
           command: |
             python3 -m venv venv
             . venv/bin/activate
-            wget http://download-ib01.fedoraproject.org/pub/epel/7/x86_64/Packages/s/spatialindex-1.8.5-1.el7.x86_64.rpm && yum install -y spatialindex-1.8.5-1.el7.x86_64.rpm
+            sudo apt-get install libspatialindex-dev
             pip install -r requirements.txt
 
       - save_cache:

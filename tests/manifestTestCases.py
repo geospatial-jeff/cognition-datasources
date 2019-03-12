@@ -1,7 +1,7 @@
 import unittest
 from datasources import Manifest
 
-class NAIPTestCases(unittest.TestCase):
+class ManifestTestCases(unittest.TestCase):
 
     valid_sources = ["CBERS", "Landsat8", "Sentinel1", "Sentinel2", "NAIP", "SRTM", "ElevationTiles"]
 
@@ -54,7 +54,7 @@ class NAIPTestCases(unittest.TestCase):
         response = self.manifest.execute()
         self.assertEqual(list(response), self.valid_sources)
 
-        expected_counts = [29, 10, 10, 20, 165, 1, 4]
+        expected_counts = [29, 10, 10, 10, 10, 1, 4]
         counts = [len(response[item]['features']) for item in response]
         self.assertListEqual(counts, expected_counts)
 
@@ -68,4 +68,5 @@ class NAIPTestCases(unittest.TestCase):
         for item in response:
             for feat in response[item]['features']:
                 if feat['properties']['datetime']:
-                    self.assertEqual(feat['properties']['datetime'].split('-')[0], '2016')
+                    if feat['properties']['datetime'] != 'null':
+                        self.assertEqual(feat['properties']['datetime'].split('-')[0], '2016')

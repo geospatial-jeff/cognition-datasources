@@ -81,3 +81,16 @@ Once the datasource itself is finished, there are a few final steps:
 2. Write [test cases](../../tests)
 3. Update the documentation [here](datasource-reference.md), [here](README.md), and [here](../README.md)
 
+You can now query your datasource as follows!
+
+```python
+from datasources import Manifest
+
+manifest = Manifest()
+manifest.load_source('MyDatasource')
+
+manifest['MyDatasource'].search(geojson_geometry)
+
+response = manifest.execute()
+```
+

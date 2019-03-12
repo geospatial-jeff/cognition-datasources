@@ -47,6 +47,7 @@ The following table shows which STAC properties are available when querying each
 
 | Name | STAC Properties | Legacy Properties | **kwargs |
 |----------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------|---------------------|
+| Digital Globe Open Data | [eo:epsg] | [legacy:event_name, legacy:timeframe] | [limit] |
 | ElevationTiles | [eo:gsd, eo:epsg, eo:instrument] | [legacy:x, legacy:y, legacy:z] | [limit, zoom] |
 | CBERS | [eo:gsd: eo:epsg, eo:instrument, eo:platform, eo:sun_elevation, eo:sun_azimuth] | [legacy:path, legacy:row, legacy:processing_level] | [limit] |
 | Landsat8 | [eo:gsd, eo:epsg, eo:instrument, eo:platform, eo:sun_elevation, eo:sun_azimuth, eo:off_nadir, eo:cloud_cover, eo:row, eo:column, landsat:processing_level] |  | [limit] |

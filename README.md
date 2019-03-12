@@ -53,6 +53,7 @@ Read the [quickstart](./docs/quickstart.ipynb) and [documentation](./docs).
 ## Supported Datasources
 | Name | Source | STAC-Compliant | Notes |
 |----------------|--------------------------------------------------------------------------|----------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| DGOpenData | [Digital Globe Open Data Program](https://www.digitalglobe.com/ecosystem/open-data) | False | Builds index with a [web scraper](https://github.com/geospatial-jeff/dg-open-data-scraper). |
 | ElevationTiles | [AWS Earth: Terrain Tiles](https://registry.opendata.aws/terrain-tiles/) | False | Sends header requests to AWS S3 Bucket. |
 | CBERS | [AWS Earth: CBERS](https://registry.opendata.aws/cbers/) | False | Sends requests to AWS S3 Bucket (**RequesterPays**) with help of [aws-sat-api](https://github.com/RemotePixel/aws-sat-api-py). |
 | Landsat8 | [AWS Earth: Landsat8](https://registry.opendata.aws/landsat-8/) | True | Sends requests to [sat-api]( https://github.com/sat-utils/sat-api). |

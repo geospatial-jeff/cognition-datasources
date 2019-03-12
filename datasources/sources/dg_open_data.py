@@ -88,3 +88,36 @@ class DGOpenData(Datasource):
                 return [stac_item]
         else:
             return [stac_item]
+
+    def example(self):
+        geoj = {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -120.673828125,
+              32.509761735919426
+            ],
+            [
+              -115.1806640625,
+              32.509761735919426
+            ],
+            [
+              -115.1806640625,
+              36.35052700542763
+            ],
+            [
+              -120.673828125,
+              36.35052700542763
+            ],
+            [
+              -120.673828125,
+              32.509761735919426
+            ]
+          ]
+        ]
+      }
+
+        self.search(geoj)
+        response = self.manifest.execute()
+        return response

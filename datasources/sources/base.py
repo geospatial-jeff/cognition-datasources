@@ -7,13 +7,13 @@ class Datasource(object):
     def __init__(self, manifest):
         self.manifest = manifest
 
-    def search(self, spatial, temporal, properties):
+    def search(self, spatial, temporal=None, properties=None, limit=10, **kwargs):
         """
         Method to preprocess spatial/temporal/properties arguments into arguments compatible with specific API.
         """
         raise NotImplementedError
 
-    def execute(self, query_body):
+    def execute(self, query):
         """
         Method to execute API request using arguments generated with `search` method and return as STAC item.
         """

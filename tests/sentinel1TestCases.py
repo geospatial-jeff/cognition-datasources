@@ -64,7 +64,6 @@ class Sentinel1TestCases(unittest.TestCase):
         self.manifest.flush()
         self.manifest['Sentinel1'].search(self.geoj['geometry'])
         response = self.manifest.execute()
-        print(response)
         self.assertEqual(list(response), ['Sentinel1'])
 
         # Confirming output is a valid feature collection

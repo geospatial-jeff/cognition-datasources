@@ -35,6 +35,13 @@ jobs:
             sudo apt-get install libspatialindex-dev
             pip install -r requirements.txt
 
+      - run:
+          name: "Setup custom environment variables"
+          command: |
+            echo 'export COPERNICUS_USER="geospatialjeff"' >> $BASH_ENV
+            echo 'export COPERNICUS_PASSWORD="dummypass123"' >> $BASH_ENV
+
+
       - save_cache:
           paths:
             - ./venv

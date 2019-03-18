@@ -100,10 +100,11 @@ def load(datasource):
 
         # Check CI build
         r = requests.get(os.path.join(source_link, 'config.yml'))
-        md = yaml.load(r.text)
+        md = yaml.load(r.text, Loader=yaml.BaseLoader)
         build_info = requests.get(f'https://circleci.com/api/v1.1/project/github/{project_path}?circle-token={md["circle-token"]}&limit=1')
         build_status = build_info.json()[0]['status']
         if build_status != 'success':
+            print("WARNING: {} was not loaded because it failed CI".format(source))
             continue
 
         # Download remote datasource .py file into sources folder

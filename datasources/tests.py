@@ -81,3 +81,4 @@ class BaseTestCases(unittest.TestCase):
                         pass
                     else:
                         raise
+                os.remove(path)

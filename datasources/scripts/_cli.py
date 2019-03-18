@@ -1,6 +1,10 @@
 import json
 import time
 import click
+import os
+import requests
+import tempfile
+import subprocess
 
 from datasources import Manifest, sources
 from datasources.utils.examples import build_examples, validate_examples
@@ -59,6 +63,49 @@ def search(spatial, start_date, end_date, properties, datasource, debug, output)
 
     return 0
 
+
+@cognition_datasources.command(name='load')
+@click.option('--datasource', '-d', type=str, multiple=True)
+def load(datasource):
+    for source in datasource:
+        source_link = getattr(sources.remote, source)
+
+        # Download remote datasource .py file into sources folder
+        source_fname = source_link.split('/')[-1] + '.py'
+        source_remote_url = os.path.join(source_link, source_fname)
+        r = requests.get(source_remote_url)
+        with open(os.path.join(os.path.dirname(__file__), '..', 'sources', source_fname), 'w+') as outfile:
+            outfile.write(r.text)
+
+        # Install datasource dependencies
+        fd, path = tempfile.mkstemp()
+        req_remote_url = os.path.join(source_link, 'requirements.txt')
+        try:
+            with os.fdopen(fd, 'w') as tmp:
+                r = requests.get(req_remote_url)
+                print(r.text)
+                tmp.write(r.text)
+        finally:
+            subprocess.call("pip install -r {}".format(path), shell=True)
+            os.remove(path)
+
+        # Check for index
+        idx_remote_url = os.path.join(source_link, 'index.idx')
+        dat_remote_url = os.path.join(source_link, 'index.dat')
+
+        idx_r = requests.get(idx_remote_url)
+        dat_r = requests.get(dat_remote_url)
+
+        if idx_r.status_code == 404 or dat_r.status_code == 404:
+            continue
+
+        with open(os.path.join(os.path.dirname(__file__), '..', 'static', '{}_rtree.idx'.format(source)), 'wb+') as outfile:
+            outfile.write(idx_r.content)
+
+        with open(os.path.join(os.path.dirname(__file__), '..', 'static', '{}_rtree.dat'.format(source)), 'wb+') as outfile:
+            outfile.write(dat_r.content)
+
+
 @cognition_datasources.command(name='examples')
 @click.option('--build/--no-build', default=False)
 @click.option('--validate//no-validate', default=False)
@@ -67,6 +114,7 @@ def examples(build, validate):
         build_examples()
     if validate:
         validate_examples()
+
 
 
 

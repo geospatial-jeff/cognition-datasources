@@ -1,10 +1,12 @@
 import json
-import time
 import click
 import os
 import requests
 import tempfile
+import time
 import subprocess
+import shutil
+import yaml
 
 from datasources import Manifest, sources
 from datasources.utils.examples import build_examples, validate_examples
@@ -64,14 +66,48 @@ def search(spatial, start_date, end_date, properties, datasource, debug, output)
     return 0
 
 
+@cognition_datasources.command(name='new')
+@click.option('--name', '-n', type=str)
+def new(name):
+    if os.path.exists(name):
+        raise ValueError("The directory {} already exists.".format(name))
+
+    shutil.copytree(os.path.join(os.path.dirname(__file__), '..', 'template'), name)
+
+    with open(os.path.join(os.getcwd(), name, 'template.py'), 'r') as f:
+        contents = f.read()
+        contents = contents.replace('__TEMPLATENAME__', name)
+
+        with open(os.path.join(os.getcwd(), name, 'template.py'), 'w') as outf:
+            outf.write(contents)
+
+    with open(os.path.join(os.getcwd(), name, 'tests.py'), 'r') as f:
+        contents = f.read()
+        contents = contents.replace('__TEMPLATENAME__', name)
+
+        with open(os.path.join(os.getcwd(), name, 'tests.py'), 'w') as outf:
+            outf.write(contents)
+
+    os.rename(os.path.join(os.getcwd(), name, 'template.py'), os.path.join(os.getcwd(), name, '{}.py'.format(name)))
+
+
 @cognition_datasources.command(name='load')
 @click.option('--datasource', '-d', type=str, multiple=True)
 def load(datasource):
     for source in datasource:
         source_link = getattr(sources.remote, source)
+        project_path = '/'.join(source_link.split('/')[3:-1])
+
+        # Check CI build
+        r = requests.get(os.path.join(source_link, 'config.yml'))
+        md = yaml.load(r.text)
+        build_info = requests.get(f'https://circleci.com/api/v1.1/project/github/{project_path}?circle-token={md["circle-token"]}&limit=1')
+        build_status = build_info.json()[0]['status']
+        if build_status != 'success':
+            continue
 
         # Download remote datasource .py file into sources folder
-        source_fname = source_link.split('/')[-1] + '.py'
+        source_fname = source + '.py'
         source_remote_url = os.path.join(source_link, source_fname)
         r = requests.get(source_remote_url)
         with open(os.path.join(os.path.dirname(__file__), '..', 'sources', source_fname), 'w+') as outfile:
@@ -83,7 +119,6 @@ def load(datasource):
         try:
             with os.fdopen(fd, 'w') as tmp:
                 r = requests.get(req_remote_url)
-                print(r.text)
                 tmp.write(r.text)
         finally:
             subprocess.call("pip install -r {}".format(path), shell=True)
@@ -114,6 +149,10 @@ def examples(build, validate):
         build_examples()
     if validate:
         validate_examples()
+
+@cognition_datasources.command(name="list")
+def list():
+    print([x.__name__ for x in sources.collections.all])
 
 
 

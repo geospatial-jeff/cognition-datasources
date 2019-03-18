@@ -1,1 +1,2 @@
 git+https://github.com/geospatial-jeff/cognition-datasources.git
+shapely==1.6.4.post2

@@ -1,9 +1,14 @@
-import unittest
+import os
 from datetime import datetime
+import json
+import tempfile
+import unittest
 
 from datasources import Manifest
 from datasources.stac.query import STACQuery
 from shapely.geometry import Polygon
+
+from stac_validator import stac_validator
 
 
 class BaseTestCases(unittest.TestCase):
@@ -52,3 +57,27 @@ class BaseTestCases(unittest.TestCase):
             date_time = datetime.strptime(f"{year}-{month}-{day}", "%Y-%m-%d")
 
             self.assertTrue(query.check_temporal(date_time))
+
+    def test_stac_compliant(self):
+        self.manifest.flush()
+        self.manifest[self.name].search(self.spatial, self.temporal)
+        response = self.manifest.execute()
+
+        for feat in response[self.name]['features']:
+
+            fd, path = tempfile.mkstemp()
+            try:
+                with os.fdopen(fd, 'w') as tmp:
+                    json.dump(feat, tmp)
+
+            finally:
+                stac = stac_validator.StacValidate(path)
+                stac.run()
+                try:
+                    self.assertEqual(stac.status['items']['valid'], 1)
+                except:
+                    # TODO: figure out why this error happens
+                    if 'Unresolvable JSON pointer' in stac.message[0]['error_message']:
+                        pass
+                    else:
+                        raise

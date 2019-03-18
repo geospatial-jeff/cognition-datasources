@@ -1,26 +1,9 @@
-aws-sat-api==2.0.2
-boto3==1.9.91
-botocore==1.12.91
-certifi==2018.11.29
-chardet==3.0.4
 Click==7.0
-docutils==0.14
-geojson==2.4.1
 geomet==0.2.0.post2
-html2text==2018.1.9
-idna==2.8
-jmespath==0.9.3
-mercantile==1.0.4
-python-dateutil==2.8.0
 requests==2.21.0
 Rtree==0.8.3
-s3transfer==0.2.0
 schema==0.6.8
-sentinelsat==0.12.2
 Shapely==1.6.4.post2
-six==1.12.0
-tqdm==4.31.1
-urllib3==1.24.1
-utm==0.4.2
+
 
 git+https://github.com/geospatial-jeff/stac-validator.git

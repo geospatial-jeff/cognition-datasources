@@ -1,6 +1,4 @@
-certifi>=2018.11.29
 Click==7.0
-docutils==0.14
 geomet==0.2.0.post2
 requests==2.21.0
 Rtree==0.8.3

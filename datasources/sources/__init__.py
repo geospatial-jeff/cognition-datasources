@@ -25,5 +25,4 @@ class collections(object):
 
 class remote(object):
 
-    Landsat8 = "https://raw.githubusercontent.com/geospatial-jeff/cognition-datasources/loading/datasources/sources/Landsat8"
-    DGOpenData = "https://raw.githubusercontent.com/geospatial-jeff/cognition-datasources/loading/datasources/sources/DGOpenData"
+    Landsat8 = "https://raw.githubusercontent.com/geospatial-jeff/cognition-datasources-landsat8/master"

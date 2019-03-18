@@ -7,10 +7,14 @@ from shapely.geometry import Polygon
 class BaseTestCases(unittest.TestCase):
 
     def setUp(self):
+        self._setUp()
         self.manifest = Manifest()
         self.name = self.__class__.__name__.replace('TestCases', '')
-        self.manifest.update({self.name: self.datasource})
+        self.manifest.update({self.name: self.datasource(self.manifest)})
         self.spatial_geom = Polygon(self.spatial['coordinates'][0])
+
+    def _setUp(self):
+        raise NotImplementedError
 
     def test_pattern(self):
         # Testing that datasource implements proper pattern

@@ -22,3 +22,8 @@ class collections(object):
     elevation = [x for x in all if 'Elevation' in x.tags]
     raster = [x for x in all if 'Raster' in x.tags]
     vector = [x for x in all if 'Vector' in x.tags]
+
+class remote(object):
+
+    Landsat8 = "https://raw.githubusercontent.com/geospatial-jeff/cognition-datasources/loading/datasources/sources/Landsat8"
+    DGOpenData = "https://raw.githubusercontent.com/geospatial-jeff/cognition-datasources/loading/datasources/sources/DGOpenData"

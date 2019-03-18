@@ -70,7 +70,6 @@ class BaseTestCases(unittest.TestCase):
                 with os.fdopen(fd, 'w') as tmp:
                     json.dump(feat, tmp)
 
-            finally:
                 stac = stac_validator.StacValidate(path)
                 stac.run()
                 try:
@@ -81,4 +80,6 @@ class BaseTestCases(unittest.TestCase):
                         pass
                     else:
                         raise
+
+            finally:
                 os.remove(path)

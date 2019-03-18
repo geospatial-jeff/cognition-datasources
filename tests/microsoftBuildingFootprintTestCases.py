@@ -8,7 +8,6 @@ class MicrosoftBuildingFootprintTestCases(unittest.TestCase):
 
     def setUp(self):
         self.manifest = Manifest()
-        self.manifest.load_source("MicrosoftBuildingFootprints")
         self.geoj = {
                   "type": "Feature",
                   "properties": {},
@@ -42,9 +41,6 @@ class MicrosoftBuildingFootprintTestCases(unittest.TestCase):
                 }
         self.geoj_geom = Polygon(self.geoj['geometry']['coordinates'][0])
 
-    def test_manifest_load(self):
-        self.assertEqual(list(self.manifest), ['MicrosoftBuildingFootprints'])
-        self.assertEqual(type(self.manifest['MicrosoftBuildingFootprints']), sources.MicrosoftBuildingFootprints)
 
     def test_msbf_search(self):
         self.manifest.flush()
@@ -52,7 +48,6 @@ class MicrosoftBuildingFootprintTestCases(unittest.TestCase):
         # Confirming that a simple search works internally
         self.manifest['MicrosoftBuildingFootprints'].search(self.geoj['geometry'])
         self.assertEqual(len(self.manifest.searches), 1)
-        self.assertEqual(type(self.manifest.searches[0][0]), sources.MicrosoftBuildingFootprints)
 
     def test_msbf_spatial_search(self):
         self.manifest.flush()

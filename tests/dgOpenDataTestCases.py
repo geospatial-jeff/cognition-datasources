@@ -7,7 +7,6 @@ class DGOpenDataTestCases(unittest.TestCase):
 
     def setUp(self):
         self.manifest = Manifest()
-        self.manifest.load_source('DGOpenData')
         self.geoj = {
       "type": "Feature",
       "properties": {},
@@ -43,11 +42,6 @@ class DGOpenDataTestCases(unittest.TestCase):
         self.temporal = ("2018-11-01", "2018-11-20")
         self.geoj_geom = Polygon(self.geoj['geometry']['coordinates'][0])
 
-    def test_manifest_load(self):
-        # Confirming loading datasoures into manifest
-        self.assertEqual(list(self.manifest), ['DGOpenData'])
-        self.assertEqual(type(self.manifest['DGOpenData']), sources.DGOpenData)
-
     def test_dg_pattern(self):
         # Confirming the datasources follows the required pattern
         self.assertEqual(hasattr(self.manifest['DGOpenData'], 'execute'), True)
@@ -59,7 +53,6 @@ class DGOpenDataTestCases(unittest.TestCase):
 
         self.manifest['DGOpenData'].search(self.geoj['geometry'])
         self.assertEqual(len(self.manifest.searches), 10)
-        self.assertEqual(type(self.manifest.searches[0][0]), sources.DGOpenData)
 
     def test_dg_spatial_search(self):
         self.manifest.flush()

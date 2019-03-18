@@ -7,7 +7,6 @@ class ElevationTilesTestCases(unittest.TestCase):
 
     def setUp(self):
         self.manifest = Manifest()
-        self.manifest.load_source('ElevationTiles')
         self.geoj = {
                   "type": "Feature",
                   "properties": {},
@@ -41,10 +40,6 @@ class ElevationTilesTestCases(unittest.TestCase):
                 }
         self.geoj_geom = Polygon(self.geoj['geometry']['coordinates'][0])
 
-    def test_manifest_load(self):
-        self.assertEqual(list(self.manifest), ['ElevationTiles'])
-        self.assertEqual(type(self.manifest['ElevationTiles']), sources.ElevationTiles)
-
     def test_elev_tiles_pattern(self):
         self.assertEqual(hasattr(self.manifest['ElevationTiles'], 'execute'), True)
         self.assertEqual(hasattr(self.manifest['ElevationTiles'], 'search'), True)
@@ -56,7 +51,6 @@ class ElevationTilesTestCases(unittest.TestCase):
         # Confirming that a simple search works internally
         self.manifest['ElevationTiles'].search(self.geoj['geometry'])
         self.assertEqual(len(self.manifest.searches), 4)
-        self.assertEqual(type(self.manifest.searches[0][0]), sources.ElevationTiles)
 
     def test_elev_tiles_spatial_search(self):
         self.manifest.flush()

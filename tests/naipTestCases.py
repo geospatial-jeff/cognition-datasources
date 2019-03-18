@@ -7,7 +7,6 @@ class NAIPTestCases(unittest.TestCase):
 
     def setUp(self):
         self.manifest = Manifest()
-        self.manifest.load_source('NAIP')
         self.geoj = {
                   "type": "Feature",
                   "properties": {},
@@ -42,11 +41,6 @@ class NAIPTestCases(unittest.TestCase):
         self.temporal = ("2017-01-01", "2017-12-31")
         self.geoj_geom = Polygon(self.geoj['geometry']['coordinates'][0])
 
-    def test_manifest_load(self):
-        # Confirming loading datasources into manifest
-        self.assertEqual(list(self.manifest), ['NAIP'])
-        self.assertEqual(type(self.manifest['NAIP']), sources.NAIP)
-
     def test_naip_pattern(self):
         # Confirming that datasource follows the required pattern
         self.assertEqual(hasattr(self.manifest['NAIP'], 'execute'), True)
@@ -60,7 +54,6 @@ class NAIPTestCases(unittest.TestCase):
         self.manifest['NAIP'].search(self.geoj['geometry'])
         self.assertEqual(len(self.manifest.searches), 10)
 
-        self.assertEqual(type(self.manifest.searches[0][0]), sources.NAIP)
         self.assertEqual(list(self.manifest.searches[0][1]), ['key', 'utm', 'bucket', 'datetime', 'resolution', 'md_key'])
 
         # Flushing all searches

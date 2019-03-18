@@ -1,14 +1,13 @@
 import unittest
 import geojson
 from shapely.geometry import Polygon
-from datasources import Manifest, sources
+from datasources import Manifest
 
 
 class CBERSTestCases(unittest.TestCase):
 
     def setUp(self):
         self.manifest = Manifest()
-        self.manifest.load_source('CBERS')
         self.geoj =  {
                       "type": "Feature",
                       "properties": {},
@@ -43,11 +42,6 @@ class CBERSTestCases(unittest.TestCase):
         self.temporal = ("2016-01-01", "2016-12-31")
         self.geoj_geom = Polygon(self.geoj['geometry']['coordinates'][0])
 
-    def test_manifest_load(self):
-        # Confirming loading datasources into manifest
-        self.assertEqual(list(self.manifest), ['CBERS'])
-        self.assertEqual(type(self.manifest['CBERS']), sources.CBERS)
-
     def test_cbers_pattern(self):
         self.assertEqual(hasattr(self.manifest['CBERS'], 'execute'), True)
         self.assertEqual(hasattr(self.manifest['CBERS'], 'search'), True)
@@ -59,7 +53,6 @@ class CBERSTestCases(unittest.TestCase):
         # Confirming that a simple search works internally
         self.manifest['CBERS'].search(self.geoj['geometry'])
         self.assertEqual(len(self.manifest.searches), 3)
-        self.assertEqual(type(self.manifest.searches[0][0]), sources.CBERS)
 
     def test_cbers_spatial_search(self):
         self.manifest.flush()

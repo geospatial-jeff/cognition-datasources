@@ -7,7 +7,6 @@ class USGS3DEPTestCases(unittest.TestCase):
 
     def setUp(self):
         self.manifest = Manifest()
-        self.manifest.load_source('USGS3DEP')
         self.geoj = {
                   "type": "Feature",
                   "properties": {},
@@ -42,11 +41,6 @@ class USGS3DEPTestCases(unittest.TestCase):
         self.geoj_geom = Polygon(self.geoj['geometry']['coordinates'][0])
         self.temporal = ("2007-10-30", "2008-02-21")
 
-
-    def test_manifest_load(self):
-        self.assertEqual(list(self.manifest), ['USGS3DEP'])
-        self.assertEqual(type(self.manifest['USGS3DEP']), sources.USGS3DEP)
-
     def test_3dep_pattern(self):
         self.assertEqual(hasattr(self.manifest['USGS3DEP'], 'execute'), True)
         self.assertEqual(hasattr(self.manifest['USGS3DEP'], 'search'), True)
@@ -57,7 +51,6 @@ class USGS3DEPTestCases(unittest.TestCase):
         # Confirming that a simple search works internally
         self.manifest['USGS3DEP'].search(self.geoj['geometry'])
         self.assertEqual(len(self.manifest.searches), 4)
-        self.assertEqual(type(self.manifest.searches[0][0]), sources.USGS3DEP)
 
     def test_3dep_spatial_search(self):
         self.manifest.flush()

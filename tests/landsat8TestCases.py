@@ -7,7 +7,6 @@ class Landsat8TestCases(unittest.TestCase):
 
     def setUp(self):
         self.manifest = Manifest()
-        self.manifest.load_source('Landsat8')
         self.geoj = {
       "type": "Feature",
       "properties": {},
@@ -42,11 +41,6 @@ class Landsat8TestCases(unittest.TestCase):
         self.temporal = ("2017-01-01", "2017-12-31")
         self.geoj_geom = Polygon(self.geoj['geometry']['coordinates'][0])
 
-    def test_manifest_load(self):
-        # Confirming loading datasoures into manifest
-        self.assertEqual(list(self.manifest), ['Landsat8'])
-        self.assertEqual(type(self.manifest['Landsat8']), sources.Landsat8)
-
     def test_landsat8_pattern(self):
         # Confirming the datasources follows the required pattern
         self.assertEqual(hasattr(self.manifest['Landsat8'], 'execute'), True)
@@ -58,7 +52,6 @@ class Landsat8TestCases(unittest.TestCase):
 
         self.manifest['Landsat8'].search(self.geoj['geometry'])
         self.assertEqual(len(self.manifest.searches), 1)
-        self.assertEqual(type(self.manifest.searches[0][0]), sources.Landsat8)
 
     def test_landsat8_spatial_search(self):
         self.manifest.flush()

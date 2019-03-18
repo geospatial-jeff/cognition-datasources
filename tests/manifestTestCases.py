@@ -1,5 +1,6 @@
 import unittest
 from datasources import Manifest
+from datasources.sources import collections
 
 class ManifestTestCases(unittest.TestCase):
 
@@ -40,11 +41,9 @@ class ManifestTestCases(unittest.TestCase):
                 }
         self.temporal = ("2016-01-01", "2016-12-31")
 
-        for s in self.valid_sources:
-            self.manifest.load_source(s)
 
     def test_load_sources(self):
-        self.assertListEqual(list(self.manifest), self.valid_sources)
+        self.assertEqual(list(self.manifest).sort(), [x.__name__ for x in collections.all].sort())
 
     def test_spatial_query(self):
         self.manifest.flush()

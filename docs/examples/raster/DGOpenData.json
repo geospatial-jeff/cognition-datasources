@@ -1,0 +1,49 @@
+{
+  "id": "105001000D4AF000_0110321",
+  "type": "Feature",
+  "bbox": [
+    -119.0917969,
+    34.2773438,
+    -119.0039062,
+    34.3652344
+  ],
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          -119.0917969,
+          34.3652344
+        ],
+        [
+          -119.0917969,
+          34.2773438
+        ],
+        [
+          -119.0039062,
+          34.2773438
+        ],
+        [
+          -119.0039062,
+          34.3652344
+        ],
+        [
+          -119.0917969,
+          34.3652344
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "datetime": "2017-12-07T00:00:00.00Z",
+    "eo:epsg": 4326,
+    "legacy:event_name": "southern-california-wildfires",
+    "legacy:timeframe": "post-event"
+  },
+  "assets": {
+    "data": {
+      "href": "http://opendata.digitalglobe.com/southern-california-wildfires/post-event/2017-12-07/105001000D4AF000/0110321.tif",
+      "title": "Raster data"
+    }
+  }
+}

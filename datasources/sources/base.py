@@ -2,49 +2,32 @@
 class Datasource(object):
 
     stac_compliant = False
+    tags = ['tag1', 'tag2']
 
     def __init__(self, manifest):
-        # self.stac_compliant = False
         self.manifest = manifest
 
-    def search(self, spatial, temporal, properties):
+    def search(self, spatial, temporal=None, properties=None, limit=10, **kwargs):
         """
-        Method to preprocess spatial/temporal/properties arguments into arguments compatible with specific API with
-        help of `load_spatial`, `load_temporal`, and `load_kwargs`
+        Method to preprocess spatial/temporal/properties arguments into arguments compatible with specific API.
         """
         raise NotImplementedError
 
-    def execute(self, query_body):
+    def execute(self, query):
         """
-        Method to execute API request using arguments generated with `search` method
+        Method to execute API request using arguments generated with `search` method and return as STAC item.
         """
         pass
 
+    def example(self):
+        """
+        Method to return an example response (used to populate the xamples in docs/examples).
+        """
+        raise NotImplementedError
+
     def execute_multi(self, query_body, conn):
+        """Internal use"""
         response = self.execute(query_body)
         conn.send({'stac_items': response, 'source': self.__class__.__name__})
         conn.close()
 
-    def load_spatial(self, spatial, bbox=False):
-        """
-        Method to load STAC spatial argument as API compatible argument
-        """
-        raise NotImplementedError
-
-    def load_temporal(self, temporal):
-        """
-        Method to load STAC temoral argument as API compatible argument
-        """
-        raise NotImplementedError
-
-    def load_kwargs(self, kwargs):
-        """
-        Method to load STAC kwargs argument as API compatible argument
-        """
-        raise NotImplementedError
-
-    def example(self):
-        """
-        Method to return an example response
-        """
-        raise NotImplementedError

@@ -3,6 +3,7 @@ from datetime import datetime
 import json
 import tempfile
 import unittest
+import operator
 
 from datasources import Manifest
 from datasources.stac.query import STACQuery
@@ -20,6 +21,14 @@ class BaseTestCases(unittest.TestCase):
         self.manifest.update({self.name: self.datasource(self.manifest)})
         self.spatial_geom = Polygon(self.spatial['coordinates'][0])
 
+    def check_properties(self, asset, properties):
+        for item in properties:
+            equality = next(iter(properties[item]))
+            comparison_operator = getattr(operator, equality)
+            if not comparison_operator(asset[item], properties[item][equality]):
+                return False
+        return True
+
     def _setUp(self):
         raise NotImplementedError
 
@@ -36,7 +45,7 @@ class BaseTestCases(unittest.TestCase):
         self.manifest[self.name].search(self.spatial)
         response = self.manifest.execute()
 
-        # Confirming that each outptu featuer intersects input
+        # Confirming that each output feature intersects input
         for feat in response[self.name]['features']:
             asset_geom = Polygon(feat['geometry']['coordinates'][0])
             self.assertTrue(asset_geom.intersects(self.spatial_geom))
@@ -48,6 +57,7 @@ class BaseTestCases(unittest.TestCase):
         response = self.manifest.execute()
         query = STACQuery(self.spatial, self.temporal)
 
+        # Confirming that each output feature is within temporal window
         for feat in response[self.name]['features']:
             if len(feat['properties']['datetime']) == 10:
                 year, month, day = feat['properties']['datetime'].split('-')
@@ -62,10 +72,13 @@ class BaseTestCases(unittest.TestCase):
         self.manifest.flush()
         self.manifest[self.name].search(self.spatial, properties=self.properties)
         response = self.manifest.execute()
+
+        # Confirming that output features ars filtered properly
         for feat in response[self.name]['features']:
             self.assertTrue(self.check_properties(feat['properties'], self.properties))
 
     def test_limit(self):
+        # Confirming that the limit kwarg works
         self.manifest.flush()
         self.manifest[self.name].search(self.spatial, limit=self.limit)
         response = self.manifest.execute()
@@ -76,6 +89,8 @@ class BaseTestCases(unittest.TestCase):
         self.manifest[self.name].search(self.spatial, self.temporal)
         response = self.manifest.execute()
 
+
+        # Confirming that output features are STAC-compliant
         for feat in response[self.name]['features']:
 
             fd, path = tempfile.mkstemp()

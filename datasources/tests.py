@@ -58,6 +58,13 @@ class BaseTestCases(unittest.TestCase):
 
             self.assertTrue(query.check_temporal(date_time))
 
+    def test_properties_search(self):
+        self.manifest.flush()
+        self.manifest[self.name].search(self.spatial, properties=self.properties)
+        response = self.manifest.execute()
+        for feat in response[self.name]['features']:
+            self.assertTrue(self.check_properties(feat['properties'], self.properties))
+
     def test_stac_compliant(self):
         self.manifest.flush()
         self.manifest[self.name].search(self.spatial, self.temporal)

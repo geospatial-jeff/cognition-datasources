@@ -13,23 +13,33 @@ Not all commonly used datasources are currently STAC-compliant.  In such cases, 
 
 ![title](docs/images/api-diagram.png)
 
+#### Datasource Drivers
+The interface defined by the library is extended by datasource drivers which are defined in external github repositories and loaded into the library through a command line interface.  Similar to how drivers control hardware, the logic implemented in the datasource driver influences how cognition-datsources accesses the underlying datasource.  Each driver is expected to follow a specific pattern and pass a standard set of test cases (enforced with CircleCI).  Check out the [contribution guidelines](/docs/contributing.md) for a guide on how to develop your own datsource driver!
+
+
+## Setup
+```
+# Install library
+pip install git+https://github.com/geospatial-jeff/cognition-datasources
+
+# Load datasources
+cognition-datasources load -d Landsat8 -d Sentinel2
+```
+
 ## Usage
+
 #### Python
 ```python
 from datasources import Manifest
-from datasources.sources import Landsat8, Sentinel2
 
 # Create manifest
 manifest = Manifest()
-
-# Load sources
-manifest.load_sources(Landsat8, Sentinel2)
 
 # Search arguments
 spatial = {"type": "Polygon", "coordinates": [[...]]}
 temporal = ("2018-10-30", "2018-12-31")
 
-# Create searches
+# Create searches for Landsat8 and Sentinel2
 for source in manifest:
     manifest[source].search(spatial, temporal=temporal)
 
@@ -39,7 +49,7 @@ response = manifest.execute()
 
 #### CLI
 ```
-cognition-datasources search xmin ymin xmax ymax --start-date "2018-10-30" --end-date "2018-12-31" -d Landsat8 -d SRTM --output response.json
+cognition-datasources search xmin ymin xmax ymax --start-date "2018-10-30" --end-date "2018-12-31" -d Landsat8 -d Sentinel2 --output response.json
 ```
 
 ## Testing

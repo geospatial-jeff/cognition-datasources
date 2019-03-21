@@ -89,7 +89,7 @@ class STACQuery(object):
         self.spatial = self.load_spatial(spatial)
         if temporal:
             self.temporal = self.load_temporal(temporal)
-        if temporal:
+        if properties:
             self.properties = properties
 
 

@@ -7,10 +7,9 @@ import time
 import subprocess
 import shutil
 import yaml
+from multiprocessing.pool import ThreadPool
 
 from datasources import Manifest, sources
-from datasources.utils.examples import build_examples, validate_examples
-
 
 @click.group(short_help="Cognition datasource query")
 def cognition_datasources():
@@ -141,19 +140,62 @@ def load(datasource):
         with open(os.path.join(os.path.dirname(__file__), '..', 'static', '{}_rtree.dat'.format(source)), 'wb+') as outfile:
             outfile.write(dat_r.content)
 
+@cognition_datasources.command(name='build-examples')
+def build_examples():
+    from datasources.sources import remote
+    remote_assets = {k: v for (k, v) in remote.__dict__.items() if type(v) == str and 'https' in v}
+    example_rel_path = 'docs/example.json'
 
-@cognition_datasources.command(name='examples')
-@click.option('--build/--no-build', default=False)
-@click.option('--validate//no-validate', default=False)
-def examples(build, validate):
-    if build:
-        build_examples()
-    if validate:
-        validate_examples()
+    def _fetch_examples(data):
+        with open(os.path.join(os.path.dirname(__file__), '..', '..', 'docs_v2', 'examples', '{}.json'.format(data['name'])),
+                  'wb+') as examplefile:
+            r = requests.get(os.path.join(data['url'], example_rel_path))
+            examplefile.write(r.content)
 
-@cognition_datasources.command(name="list")
-def list():
-    print([x.__name__ for x in sources.collections.all])
+    m = ThreadPool()
+    m.map(_fetch_examples, [{'name': k, 'url': v} for k,v in remote_assets.items()])
+
+@cognition_datasources.command(name='build-docs')
+def build_docs():
+    from datasources.sources import remote
+    remote_assets = {k: v for (k, v) in remote.__dict__.items() if type(v) == str and 'https' in v}
+    docs_rel_path = 'docs/README.md'
+
+    def _fetch_docs(data):
+        r = requests.get(os.path.join(data['url'], docs_rel_path))
+        return {data['name']: r.content}
+
+    m = ThreadPool()
+    response = m.map(_fetch_docs, [{'name': k, 'url': v} for k,v in remote_assets.items()])
+    with open(os.path.join(os.path.dirname(__file__), '..', '..', 'docs_v2', 'datasource-reference.md'), 'ab+') as docfile:
+        for item in response:
+            name = list(item.keys())[0]
+            md = item[name]
+
+            docfile.write(md)
+            docfile.write(b"\n---\n")
+
+
+
+
+
+
+
+
+
+
+# @cognition_datasources.command(name='examples')
+# @click.option('--build/--no-build', default=False)
+# @click.option('--validate//no-validate', default=False)
+# def examples(build, validate):
+#     if build:
+#         build_examples()
+#     if validate:
+#         validate_examples()
+#
+# @cognition_datasources.command(name="list")
+# def list():
+#     print([x.__name__ for x in sources.collections.all])
 
 
 

@@ -65,6 +65,12 @@ class BaseTestCases(unittest.TestCase):
         for feat in response[self.name]['features']:
             self.assertTrue(self.check_properties(feat['properties'], self.properties))
 
+    def test_limit(self):
+        self.manifest.flush()
+        self.manifest[self.name].search(self.spatial, limit=self.limit)
+        response = self.manifest.execute()
+        self.assertLessEqual(len(response[self.name]['features']), self.limit)
+
     def test_stac_compliant(self):
         self.manifest.flush()
         self.manifest[self.name].search(self.spatial, self.temporal)

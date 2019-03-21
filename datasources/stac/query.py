@@ -129,4 +129,9 @@ class STACQuery(object):
             idx = index.Rtree(rtree_location)
             return [x.object for x in idx.intersection(self.bbox(), objects=True)]
         except:
-            raise FileNotFoundError("Could not find rtree for the datasource at the following path: {}".format(rtree_location))
+            # Look for rtree in current directory
+            try:
+                idx = index.Rtree('{}_rtree'.format(name))
+                return [x.object for x in idx.intersection(self.bbox(), objects=True)]
+            except:
+                raise FileNotFoundError("Could not find rtree for the datasource at the following path: {}".format(rtree_location))

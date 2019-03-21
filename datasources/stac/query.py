@@ -1,8 +1,11 @@
 import operator
 from datetime import datetime
+import os
 
 from schema import Schema, And
 from geomet import wkt
+from rtree import index
+
 
 class STACQueryError(BaseException):
     pass
@@ -117,3 +120,13 @@ class STACQuery(object):
             if not comparison_operator(asset[item], self.properties[item][equality]):
                 return False
         return True
+
+    def check_spatial(self, name):
+        static_dir = os.path.join(os.path.dirname(__file__), '..', 'static')
+        rtree_location = os.path.join(static_dir, '{}_rtree'.format(name))
+
+        try:
+            idx = index.Rtree(rtree_location)
+            return [x.object for x in idx.intersection(self.bbox(), objects=True)]
+        except:
+            raise FileNotFoundError("Could not find rtree for the datasource at the following path: {}".format(rtree_location))

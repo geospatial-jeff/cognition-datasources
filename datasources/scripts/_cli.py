@@ -134,10 +134,15 @@ def load(datasource):
         if idx_r.status_code == 404 or dat_r.status_code == 404:
             continue
 
-        with open(os.path.join(os.path.dirname(__file__), '..', 'static', '{}_rtree.idx'.format(source)), 'wb+') as outfile:
+        static_dir = os.path.join(os.path.dirname(__file__), '..', 'static')
+        if not os.path.exists(static_dir):
+            os.makedirs(static_dir)
+
+
+        with open(os.path.join(static_dir, '{}_rtree.idx'.format(source)), 'wb+') as outfile:
             outfile.write(idx_r.content)
 
-        with open(os.path.join(os.path.dirname(__file__), '..', 'static', '{}_rtree.dat'.format(source)), 'wb+') as outfile:
+        with open(os.path.join(static_dir, '{}_rtree.dat'.format(source)), 'wb+') as outfile:
             outfile.write(dat_r.content)
 
 @cognition_datasources.command(name='build-examples')

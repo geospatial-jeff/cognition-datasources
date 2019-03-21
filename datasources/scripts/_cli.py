@@ -147,7 +147,7 @@ def build_examples():
     example_rel_path = 'docs/example.json'
 
     def _fetch_examples(data):
-        with open(os.path.join(os.path.dirname(__file__), '..', '..', 'docs_v2', 'examples', '{}.json'.format(data['name'])),
+        with open(os.path.join(os.path.dirname(__file__), '..', '..', 'docs', 'examples', '{}.json'.format(data['name'])),
                   'wb+') as examplefile:
             r = requests.get(os.path.join(data['url'], example_rel_path))
             examplefile.write(r.content)
@@ -167,7 +167,7 @@ def build_docs():
 
     m = ThreadPool()
     response = m.map(_fetch_docs, [{'name': k, 'url': v} for k,v in remote_assets.items()])
-    with open(os.path.join(os.path.dirname(__file__), '..', '..', 'docs_v2', 'datasource-reference.md'), 'wb+') as docfile:
+    with open(os.path.join(os.path.dirname(__file__), '..', '..', 'docs', 'datasource-reference_v2.md'), 'wb+') as docfile:
         for item in response:
             name = list(item.keys())[0]
             md = item[name]

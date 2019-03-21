@@ -1,1 +1,2 @@
 include datasources/template/*
+include datasources/template/.circleci/*

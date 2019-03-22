@@ -25,6 +25,16 @@ class collections(object):
 
 class remote(object):
 
+    CBERS = "https://raw.githubusercontent.com/geospatial-jeff/cognition-datasources-cbers/master"
+    DGOpenData = "https://raw.githubusercontent.com/geospatial-jeff/cognition-datasources-dgopendata/master"
+    ElevationTiles = "https://raw.githubusercontent.com/geospatial-jeff/cognition-datasources-elevationtiles/master"
     Landsat8 = "https://raw.githubusercontent.com/geospatial-jeff/cognition-datasources-landsat8/master"
-    Sentinel2 = "https://raw.githubusercontent.com/geospatial-jeff/cognition-datasources-sentinel2/master"
+    MicrosoftBuildingFootprints = "https://raw.githubusercontent.com/geospatial-jeff/cognition-datasources-mbf/master"
     NAIP = "https://raw.githubusercontent.com/geospatial-jeff/cognition-datasources-naip/master"
+    Sentinel1 = "https://raw.githubusercontent.com/geospatial-jeff/cognition-datasources-sentinel1/master"
+    Sentinel2 = "https://raw.githubusercontent.com/geospatial-jeff/cognition-datasources-sentinel2/master"
+    SRTM = "https://raw.githubusercontent.com/geospatial-jeff/cognition-datasources-srtm/master"
+    USGS3DEP = "https://raw.githubusercontent.com/geospatial-jeff/cognition-datasources-usgs3dep/master"
+
+
+

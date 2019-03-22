@@ -172,8 +172,9 @@ def build_docs():
 
     m = ThreadPool()
     response = m.map(_fetch_docs, [{'name': k, 'url': v} for k,v in remote_assets.items()])
+    response_ordered = sorted(response, key=lambda x: list(x)[0])
     with open(os.path.join(os.path.dirname(__file__), '..', '..', 'docs', 'datasource-reference_v2.md'), 'wb+') as docfile:
-        for item in response:
+        for item in response_ordered:
             name = list(item.keys())[0]
             md = item[name]
 

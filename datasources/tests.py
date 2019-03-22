@@ -15,6 +15,7 @@ from stac_validator import stac_validator
 class BaseTestCases(unittest.TestCase):
 
     def setUp(self):
+        self.spatial_mode = 'geometry'
         self._setUp()
         self.manifest = Manifest()
         self.name = self.__class__.__name__.replace('TestCases', '')
@@ -47,7 +48,15 @@ class BaseTestCases(unittest.TestCase):
 
         # Confirming that each output feature intersects input
         for feat in response[self.name]['features']:
-            asset_geom = Polygon(feat['geometry']['coordinates'][0])
+            if self.spatial_mode == 'geometry':
+                asset_geom = Polygon(feat['geometry']['coordinates'][0])
+            elif self.spatial_mode == 'extent':
+                asset_geom = Polygon([[feat['bbox'][0], feat['bbox'][3]],
+                                      [feat['bbox'][2], feat['bbox'][3]],
+                                      [feat['bbox'][2], feat['bbox'][1]],
+                                      [feat['bbox'][0], feat['bbox'][1]],
+                                      [feat['bbox'][0], feat['bbox'][3]]])
+
             self.assertTrue(asset_geom.intersects(self.spatial_geom))
 
     def test_temporal_search(self):

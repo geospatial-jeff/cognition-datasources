@@ -86,7 +86,7 @@ class BaseTestCases(unittest.TestCase):
 
     def test_stac_compliant(self):
         self.manifest.flush()
-        self.manifest[self.name].search(self.spatial, self.temporal)
+        self.manifest[self.name].search(self.spatial)
         response = self.manifest.execute()
 
 

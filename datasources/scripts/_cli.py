@@ -181,4 +181,10 @@ def build_docs():
             docfile.write(md)
             docfile.write(b"\n---\n")
 
+@cognition_datasources.command(name='list')
+def list():
+    from datasources.sources import collections
+    sources = collections.load_sources()
+    print(sources)
+
 

@@ -108,7 +108,7 @@ class STACQuery(object):
         return wkt.dumps(self.spatial)
 
     def check_temporal(self, date_time):
-        if self.temporal[0] < date_time < self.temporal[1]:
+        if self.temporal[0] <= date_time <= self.temporal[1]:
             return True
         else:
             return False

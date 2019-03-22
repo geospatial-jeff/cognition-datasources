@@ -3,7 +3,7 @@
 The purpose of this page is to explain how to contribute to the library by building your own Datasource Driver for use with cognition-datasources.
 
 ## Datasource Driver
-A datasource driver is a high-level wrapper of the underlying API which translates between STAC-compliant and API-compliant requests/responses.  It inherits a standard pattern defined in the [sources.base.Datasource]([../datasources/sources/base.py]) base class.  Realistically, a driver will look something like this:
+A datasource driver is a high-level wrapper of the underlying API which translates between STAC-compliant and API-compliant requests/responses.  It inherits a standard pattern defined in the [sources.base.Datasource](../datasources/sources/base.py) base class.  Realistically, a driver will look something like this:
 
 ```python
 class MyDatasource(Datasource):
@@ -61,9 +61,6 @@ There are a couple of things happening here, let's go over them.
 - If the API is STAC compliant, the execute method should return the API response without any modification.  If the API is not STAC compliant, it should return a list of STAC Items.
 - Executes in worker threads.
 
-#### Driver Notes
-- The `search` method runs in the main thread, the `execute` method runs in worker processes spawned with `multiprocessing.Process`.
-
 ---
 
 ## Driver Setup
@@ -100,7 +97,7 @@ Let's pretend our `FakeSat` data is exposed via a simple REST API (`https://Fake
 
 ```json
 {
-  "intersects": [-118, 32, -116, 34]
+  "intersects": [-118, 32, -116, 34],
   "acquisitionDate": {
     "day": 30,
     "month": 10,
@@ -267,10 +264,11 @@ You can add additional test cases as needed.
 - `README.md` should contain two tables.  The first indicates which input fields are supported by the driver.  The second provides a simple schema of the STAC properties exposed by the driver.
 
 **(6). Publish directory to public GitHub repo and set up CircleCi**
+
 CircleCI is a simple, cloud-hosted, continuous integration system with good integration with GitHub.  Cognition-datasoures requires that all drivers have a CircleCI configuration.  When loading new datasources, CircleCI is used to ensure that the datasource is functional and has passed the required test cases.  The starter-project provides a default CircleCI configuration in the `.circleci` folder which should suffice for the large majority of drivers.  Follow these steps to configure CircleCI:
 
 1. Login to [CircleCI via Github](https://circleci.com/integrations/github/).
-2. Click `Add Projects` on the side of the dashboard and then `Set Up Building` next to the appropriate repository.
+2. Click `Add Projects` on the side of the dashboard and then `Set Up Project` next to the appropriate repository.
 3. Click `Start building`
 
 Done!
@@ -286,8 +284,18 @@ Cognition-datasources requires access to your project's API Key to determine whe
 **NOTE: Do not commit your account level API key, please make sure you are generating a project-level key with the above steps before committing**
 
 **(8). Register your driver in cognition-datasources via pull request**
-Register your driver in [datasources.sources.__init__.py] by creating a class attribute in the `remote` object containing the url to the driver's master branch.  Make sure the url is pointing to raw github content.  Submit the pull request into dev and your driver will be included with the next release!
+Register your driver in [datasources.sources.__init__.py](../datasources/sources/__init__.py) by creating a class attribute in the `remote` object containing the url to the driver's master branch.  Make sure the url is pointing to raw github content.  
 
+```python
+class remote(object):
+
+    Landsat8 = "https://raw.githubusercontent.com/geospatial-jeff/cognition-datasources-landsat8/master"
+    Sentinel2 = "https://raw.githubusercontent.com/geospatial-jeff/cognition-datasources-sentinel2/master"
+    NAIP = "https://raw.githubusercontent.com/geospatial-jeff/cognition-datasources-naip/master"
+    FakeSat = "https://raw.githubusercontent.com/geospatial-jeff/cognition-datasources-fakesat/master"
+```
+
+Submit the pull request into dev and your driver will be included with the next release!  Another user would hypothetically be able to load our fake driver with `cognition-datasources load -d FakeSat`!
 
 ### Additional Notes
 ##### Spatial Handling

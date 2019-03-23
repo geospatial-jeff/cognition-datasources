@@ -283,7 +283,13 @@ Cognition-datasources requires access to your project's API Key to determine whe
 
 **NOTE: Do not commit your account level API key, please make sure you are generating a project-level key with the above steps before committing**
 
-**(8). Register your driver in cognition-datasources via pull request**
+**(8). Add your CircleCI build status badge to the first line of `docs/README.md`**
+
+1. From the CircleCI project page, go to settings by clicking the gear in the top right corner.
+2. Click `StatusBadges`
+3. Ensure `Embed Code` is set to Markdown and copy/paste the code to the first line of `docs/README.md`.
+
+**(9). Register your driver in cognition-datasources via pull request**
 Register your driver in [datasources.sources.__init__.py](../datasources/sources/__init__.py) by creating a class attribute in the `remote` object containing the url to the driver's master branch.  Make sure the url is pointing to raw github content.  
 
 ```python

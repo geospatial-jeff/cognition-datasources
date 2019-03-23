@@ -54,7 +54,7 @@ cognition-datasources search xmin ymin xmax ymax --start-date "2018-10-30" --end
 ```
 
 ## Testing
-Each driver must pass a [standard set of test cases](datasources/tests.py) and uses CircleCI to ensure only working drivers are loaded into the library.
+Each driver must pass a [standard set of test cases](datasources/tests.py) and uses CircleCI to ensure only working drivers are loaded into the library.  View the status of each driver [here](/docs/datasource-status.md).
 
 ## Documentation
 Read the [quickstart](./docs/quickstart.ipynb) and [documentation](./docs).

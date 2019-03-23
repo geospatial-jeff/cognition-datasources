@@ -179,7 +179,7 @@ def build_docs():
                 build_status.append({'name': item, 'status': lines[0]})
 
     with open(os.path.join(os.path.dirname(__file__), '..', '..', 'docs', 'datasource-status.md'), 'w+') as statusfile:
-        statusfile.write("Driver Status")
+        statusfile.write("# Driver Status\n")
         statusfile.write("| Driver Name | Status |\n")
         statusfile.write("| ----- | ----- |\n")
         for item in build_status:

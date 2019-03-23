@@ -1,5 +1,5 @@
 # API Docs
-The interface allows querying datasources with **spatial**, **temporal**, and **properties** parameters.  Spatial and temporal are standardized across all datasources while properties varies across datasources as different APIs have different responses.
+The interface allows searching datasources with **spatial**, **temporal**, and **properties** parameters.  Spatial is always required.  Temporal is always accepted but not always honored (not all spatial datasources are temporal).  Properties is always accepted but varies across drivers as different APIs have different responses.
 
 ### Spatial
 The standard representation of space is a [GeoJSON geometry object](https://tools.ietf.org/html/rfc7946#section-3.1):
@@ -43,7 +43,7 @@ date_time_notation = ("2018-10-30:T6:30:00.00Z", "2018-10-30:T8:30:00.00Z") # 2 
 ```
 
 ### Properties
-The following table shows which STAC properties are available when querying each datasource with the `properties` parameter.  Metadata exposed by the API which doesn't fit into an existing STAC extension is given the `legacy` extension.  Currently, only **eo-epsg** and **eo-instrument** are available to all datasources, while **eo-gsd** is available to all except Sentinel1.  See the [datasource-reference](./datasource-reference.md) for more information.
+The following table shows which STAC properties are available when querying each datasource with the `properties` parameter.  Metadata exposed by the API which doesn't fit into an existing STAC extension is given the `legacy` extension.  Currently, only **eo-epsg** is available to all datasources.  See the [datasource-reference](./datasource-reference.md) for more information.
 
 | Name | STAC Properties | Legacy Properties | **kwargs |
 |----------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------|---------------------|
@@ -59,7 +59,7 @@ The following table shows which STAC properties are available when querying each
 | Microsoft Building Footprints | [eo:epsg] | [legacy:area, legacy:length, legacy:state] | [limit] |
 
 ### Response
-The response is a dictionary of feature collections with a key for each searched datasource.  Each feature in the feature collection is a STAC Item representing a single asset returned by the query.  Example STAC Items for each datasource can be found [here](./examples).
+The response is a dictionary of feature collections with a key for each searched datasource.  Each feature in the feature collection is a STAC Item representing a single asset returned by the query.  Items returned from APIs which are not STAC compliant do not implement the standard `links` property, as there is no underlying STAC catalog to link with.  Example STAC Items for each datasource can be found in the [examples folder](./examples).
 
 ```json
 {
@@ -78,5 +78,5 @@ The response is a dictionary of feature collections with a key for each searched
 - Access to any datasources sourced by AWS Earth requires properly configured AWS credentials.  RequesterPay policies may apply.
 - Access to Sentinel-1 requires a valid Copernicus Open Access Hub account with username and password saved to the `COPERNICUS_USER` and `COPERNICUS_PASSWORD` environment variables.
 
-### Lisencing and Data Rights
+### Licencing and Data Rights
 This library uses the [Apache License 2.0](https://choosealicense.com/licenses/apache-2.0/) which allows for commercial use but not all datasources exposed by the library are licensed for commercial use.  Please refer to the license of the underlying datasource before using commercially.

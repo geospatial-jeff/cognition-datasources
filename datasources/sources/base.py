@@ -19,12 +19,6 @@ class Datasource(object):
         """
         pass
 
-    def example(self):
-        """
-        Method to return an example response (used to populate the xamples in docs/examples).
-        """
-        raise NotImplementedError
-
     def execute_multi(self, query_body, conn):
         """Internal use"""
         response = self.execute(query_body)

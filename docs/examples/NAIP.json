@@ -1,0 +1,87 @@
+{
+  "id": "m_3910958_se_12_1_20160711_20161017",
+  "type": "Feature",
+  "properties": {
+    "datetime": "2016-07-11T00:00:00.000Z",
+    "eo:epsg": 26912,
+    "eo:gsd": 1.0,
+    "eo:instrument": "Leica ADS100",
+    "eo:bands": [
+      {
+        "name": "B01",
+        "common_name": "red",
+        "gsd": 1.0,
+        "center_wavelength": 635,
+        "full_width_half_max": 16,
+        "accuracy": 6
+      },
+      {
+        "name": "B02",
+        "common_name": "green",
+        "gsd": 1.0,
+        "center_wavelength": 555,
+        "full_width_half_max": 30,
+        "accuracy": 6
+      },
+      {
+        "name": "B03",
+        "common_name": "blue",
+        "gsd": 1.0,
+        "center_wavelength": 465,
+        "full_width_half_max": 30,
+        "accuracy": 6
+      },
+      {
+        "name": "B04",
+        "common_name": "nir",
+        "gsd": 1.0,
+        "center_wavelength": 845,
+        "full_width_half_max": 37,
+        "accuracy": 6
+      }
+    ]
+  },
+  "assets": {
+    "analytic": {
+      "href": "s3://naip-analytic/ut/2016/100cm/rgbir/39109/m_3910958_se_12_1_20160711_20161017.tif",
+      "title": "Raster data"
+    },
+    "metadata": {
+      "href": "s3://naip-analytic/ut/2016/100cm/fgdc/39109/m_3910958_se_12_1_20160711.txt",
+      "title": "Raster metadata"
+    }
+  },
+  "bbox": [
+    -109.8125,
+    39.0,
+    -109.75,
+    39.0625
+  ],
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          -109.8125,
+          39.0625
+        ],
+        [
+          -109.75,
+          39.0625
+        ],
+        [
+          -109.75,
+          39.0
+        ],
+        [
+          -109.8125,
+          39.0
+        ],
+        [
+          -109.8125,
+          39.0625
+        ]
+      ]
+    ]
+  }
+}

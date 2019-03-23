@@ -1,6 +1,11 @@
-from schema import Schema, And
+import operator
 from datetime import datetime
+import os
+
+from schema import Schema, And
 from geomet import wkt
+from rtree import index
+
 
 class STACQueryError(BaseException):
     pass
@@ -78,18 +83,15 @@ class STACQuery(object):
 
         return (start_date, end_date)
 
-    def __init__(self, spatial, temporal=None):
+
+
+    def __init__(self, spatial, temporal=None, properties=None):
         self.spatial = self.load_spatial(spatial)
         if temporal:
             self.temporal = self.load_temporal(temporal)
+        if properties:
+            self.properties = properties
 
-        self.equalities = {
-                        '=': 'eq',
-                        '>': 'gt',
-                        '<': 'lt',
-                        '>=': 'gte',
-                        '<=': 'lte'
-                        }
 
     def bbox(self):
         """
@@ -106,7 +108,30 @@ class STACQuery(object):
         return wkt.dumps(self.spatial)
 
     def check_temporal(self, date_time):
-        if self.temporal[0] < date_time < self.temporal[1]:
+        if self.temporal[0] <= date_time <= self.temporal[1]:
             return True
         else:
             return False
+
+    def check_properties(self, asset):
+        for item in self.properties:
+            equality = next(iter(self.properties[item]))
+            comparison_operator = getattr(operator, equality)
+            if not comparison_operator(asset[item], self.properties[item][equality]):
+                return False
+        return True
+
+    def check_spatial(self, name):
+        static_dir = os.path.join(os.path.dirname(__file__), '..', 'static')
+        rtree_location = os.path.join(static_dir, '{}_rtree'.format(name))
+
+        try:
+            idx = index.Rtree(rtree_location)
+            return [x.object for x in idx.intersection(self.bbox(), objects=True)]
+        except:
+            # Look for rtree in current directory
+            try:
+                idx = index.Rtree('index')
+                return [x.object for x in idx.intersection(self.bbox(), objects=True)]
+            except:
+                raise FileNotFoundError("Could not find rtree for the datasource at the following path: {}".format(rtree_location))

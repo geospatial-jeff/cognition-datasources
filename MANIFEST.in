@@ -1,8 +1,3 @@
-include datasources/static/cbers/cbers_rtree.dat
-include datasources/static/cbers/cbers_rtree.idx
-include datasources/static/naip/naip_rtree.dat
-include datasources/static/naip/naip_rtree.idx
-include datasources/static/3dep/3dep_rtree.dat
-include datasources/static/3dep/3dep_rtree.idx
-include datasources/static/dg-open-data/dg-open-data.dat
-include datasources/static/dg-open-data/dg-open-data.idx
+include datasources/template/*
+include datasources/template/.circleci/*
+include datasources/template/docs/*

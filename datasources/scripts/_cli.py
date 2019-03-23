@@ -138,12 +138,13 @@ def load(datasource):
         if not os.path.exists(static_dir):
             os.makedirs(static_dir)
 
-
         with open(os.path.join(static_dir, '{}_rtree.idx'.format(source)), 'wb+') as outfile:
             outfile.write(idx_r.content)
 
         with open(os.path.join(static_dir, '{}_rtree.dat'.format(source)), 'wb+') as outfile:
             outfile.write(dat_r.content)
+
+        print("Succesfully loaded the {} driver".format(source))
 
 @cognition_datasources.command(name='build-examples')
 def build_examples():

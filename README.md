@@ -1,7 +1,5 @@
 # cognition-datasources
 
-[![CircleCI](https://circleci.com/gh/geospatial-jeff/cognition-datasources/tree/master.svg?style=svg)](https://circleci.com/gh/geospatial-jeff/cognition-datasources/tree/master)
-
 ## About
 This library defines a STAC-compliant standardized interface for searching geospatial assets, primarily remotely sensed imagery.  The [Spatio-Temporal-Asset-Catalog (STAC)](https://github.com/radiantearth/stac-spec) specification provides common metadata and API schemas to search and access geospatial data.  The standardized interface used by the library is based on the STAC spec and allows searching across three dimensions:
 
@@ -54,7 +52,7 @@ cognition-datasources search xmin ymin xmax ymax --start-date "2018-10-30" --end
 ```
 
 ## Testing
-Each driver must pass a [standard set of test cases](datasources/tests.py) and uses CircleCI to ensure only working drivers are loaded into the library.
+Each driver must pass a [standard set of test cases](datasources/tests.py) and uses CircleCI to ensure only working drivers are loaded into the library.  View the status of each driver [here](/docs/datasource-status.md).
 
 ## Documentation
 Read the [quickstart](./docs/quickstart.ipynb) and [documentation](./docs).

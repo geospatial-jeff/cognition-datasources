@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/geospatial-jeff/cognition-datasources-cbers.svg?style=svg)](https://circleci.com/gh/geospatial-jeff/cognition-datasources-cbers)
+
 ## CBERS
 
 | Parameter | Status |
@@ -20,6 +22,8 @@
 | legacy:path | str | '049' |
 | legacy:processing_level | str | 'L2' |
 ---
+[![CircleCI](https://circleci.com/gh/geospatial-jeff/cognition-datasources-dgopendata.svg?style=svg)](https://circleci.com/gh/geospatial-jeff/cognition-datasources-dgopendata)
+
 ## DG Open Data
 
 | Parameter | Status |
@@ -39,6 +43,8 @@
 ##### Notes
 - There is no source API for this datasource, instead an index is created with the [dg-open-data-scraper](https://github.com/geospatial-jeff/dg-open-data-scraper).
 ---
+[![CircleCI](https://circleci.com/gh/geospatial-jeff/cognition-datasources-elevationtiles.svg?style=svg)](https://circleci.com/gh/geospatial-jeff/cognition-datasources-elevationtiles)
+
 ## Elevation Tiles
 
 | Parameter | Status |
@@ -62,6 +68,8 @@
 - The source API is a XYZ tiled elevation service.  The `zoom` kwarg changes the zoom level being queried.
 - The source API doesn't support temporal data.  Can search with temporal but it is not honored.
 ---
+[![CircleCI](https://circleci.com/gh/geospatial-jeff/cognition-datasources-landsat8.svg?style=svg)](https://circleci.com/gh/geospatial-jeff/cognition-datasources-landsat8)
+
 ## Landsat8
 
 | Parameter | Status |
@@ -86,6 +94,8 @@
 | eo:column | str | '032' |
 | landsat:processing_level | str | 'L1TP' |
 ---
+[![CircleCI](https://circleci.com/gh/geospatial-jeff/cognition-datasources-mbf.svg?style=svg)](https://circleci.com/gh/geospatial-jeff/cognition-datasources-mbf)
+
 ## Microsoft Building Footprints
 
 | Parameter | Status |
@@ -108,6 +118,8 @@
 ##### Notes
 - The source API doesn't support temporal data.  Can search with temporal but it is not honored.
 ---
+[![CircleCI](https://circleci.com/gh/geospatial-jeff/cognition-datasources-naip.svg?style=svg)](https://circleci.com/gh/geospatial-jeff/cognition-datasources-naip)
+
 ## NAIP
 
 | Parameter | Status |
@@ -124,24 +136,8 @@
 | eo:epsg | int | 26914 |
 | eo:instrument | str | 'Leica ADS100' |
 ---
-## SRTM
+[![CircleCI](https://circleci.com/gh/geospatial-jeff/cognition-datasources-sentinel1.svg?style=svg)](https://circleci.com/gh/geospatial-jeff/cognition-datasources-sentinel1)
 
-| Parameter | Status |
-| ----------| ------ |
-| Spatial | :heavy_check_mark: |
-| Temporal | :x: |
-| Properties | :heavy_check_mark: |
-| **kwargs | [limit] |
-
-##### Properties
-| Property | Type | Example |
-|--------------------------|-------|-------------|
-| eo:gsd | float | 305.74 |
-| eo:epsg | int | 3857 |
-| eo:instrument | str | 'srtm' |
-| legacy:x | str | 'W102' |
-| legacy:y | str | 'N44' |
----
 ## Sentinel1
 
 | Parameter | Status |
@@ -162,6 +158,8 @@
 | legacy:lastorbitnumber | int | 14760 |
 | legacy:swathidentifier | str | 'IW1 IW2 IW3' |
 ---
+[![CircleCI](https://circleci.com/gh/geospatial-jeff/cognition-datasources-sentinel2.svg?style=svg)](https://circleci.com/gh/geospatial-jeff/cognition-datasources-sentinel2)
+
 ## Sentinel2
 
 | Parameter | Status |
@@ -185,6 +183,28 @@
 | sentinel:grid_square | str | 'GJ' |
 | sentinel:sequence | str | '0' |
 ---
+[![CircleCI](https://circleci.com/gh/geospatial-jeff/cognition-datasources-srtm.svg?style=svg)](https://circleci.com/gh/geospatial-jeff/cognition-datasources-srtm)
+
+## SRTM
+
+| Parameter | Status |
+| ----------| ------ |
+| Spatial | :heavy_check_mark: |
+| Temporal | :x: |
+| Properties | :heavy_check_mark: |
+| **kwargs | [limit] |
+
+##### Properties
+| Property | Type | Example |
+|--------------------------|-------|-------------|
+| eo:gsd | float | 305.74 |
+| eo:epsg | int | 3857 |
+| eo:instrument | str | 'srtm' |
+| legacy:x | str | 'W102' |
+| legacy:y | str | 'N44' |
+---
+[![CircleCI](https://circleci.com/gh/geospatial-jeff/cognition-datasources-usgs3dep.svg?style=svg)](https://circleci.com/gh/geospatial-jeff/cognition-datasources-usgs3dep)
+
 ## USGS3DEP
 
 | Parameter | Status |

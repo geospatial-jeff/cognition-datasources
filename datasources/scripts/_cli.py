@@ -167,25 +167,29 @@ def build_docs():
     remote_assets = {k: v for (k, v) in remote.__dict__.items() if type(v) == str and 'https' in v}
     docs_rel_path = 'docs/README.md'
 
-    def _fetch_docs(data):
-        r = requests.get(os.path.join(data['url'], docs_rel_path))
-        return {data['name']: r.content}
-
-    m = ThreadPool()
-    response = m.map(_fetch_docs, [{'name': k, 'url': v} for k,v in remote_assets.items()])
-    response_ordered = sorted(response, key=lambda x: list(x)[0])
+    build_status = []
     with open(os.path.join(os.path.dirname(__file__), '..', '..', 'docs', 'datasource-reference.md'), 'wb+') as docfile:
-        for item in response_ordered:
-            name = list(item.keys())[0]
-            md = item[name]
-
-            docfile.write(md)
+        for item in remote_assets:
+            r = requests.get(os.path.join(remote_assets[item], docs_rel_path))
+            docfile.write(r.content)
             docfile.write(b"\n---\n")
+
+            lines = r.text.splitlines()
+            if 'CircleCI' in lines[0]:
+                build_status.append({'name': item, 'status': lines[0]})
+
+    with open(os.path.join(os.path.dirname(__file__), '..', '..', 'docs', 'datasource-status.md'), 'w+') as statusfile:
+        statusfile.write("# Driver Status\n")
+        statusfile.write("| Driver Name | Status |\n")
+        statusfile.write("| ----- | ----- |\n")
+        for item in build_status:
+            statusfile.write("| {} | {} |\n".format(item['name'], item['status']))
+
 
 @cognition_datasources.command(name='list')
 def list():
     from datasources.sources import collections
     sources = collections.load_sources()
-    print(sources)
+    print([x.__name__ for x in sources])
 
 

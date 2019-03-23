@@ -1,7 +1,5 @@
 # cognition-datasources
 
-[![CircleCI](https://circleci.com/gh/geospatial-jeff/cognition-datasources/tree/master.svg?style=svg)](https://circleci.com/gh/geospatial-jeff/cognition-datasources/tree/master)
-
 ## About
 This library defines a STAC-compliant standardized interface for searching geospatial assets, primarily remotely sensed imagery.  The [Spatio-Temporal-Asset-Catalog (STAC)](https://github.com/radiantearth/stac-spec) specification provides common metadata and API schemas to search and access geospatial data.  The standardized interface used by the library is based on the STAC spec and allows searching across three dimensions:
 

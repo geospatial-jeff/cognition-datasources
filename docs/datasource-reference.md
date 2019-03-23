@@ -136,6 +136,8 @@
 | eo:epsg | int | 26914 |
 | eo:instrument | str | 'Leica ADS100' |
 ---
+[![CircleCI](https://circleci.com/gh/geospatial-jeff/cognition-datasources-sentinel1.svg?style=svg)](https://circleci.com/gh/geospatial-jeff/cognition-datasources-sentinel1)
+
 ## Sentinel1
 
 | Parameter | Status |

@@ -24,6 +24,11 @@ RUN \
     yum install -y spatialindex-1.8.5-1.el7.x86_64.rpm; \
     cd ..; rm -rf rtree-config;
 
+# Installing geos
+RUN \
+    yum install -y geos-devel;
+
+
 # Installing cognition-datasources + requirements
 COPY requirements.txt ./
 

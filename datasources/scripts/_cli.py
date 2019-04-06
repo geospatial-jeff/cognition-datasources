@@ -9,7 +9,7 @@ import shutil
 import yaml
 from multiprocessing.pool import ThreadPool
 
-from datasources import Manifest, sources
+from datasources import Manifest, sources, layer_arn
 
 @click.group(short_help="Cognition datasource query")
 def cognition_datasources():
@@ -100,12 +100,17 @@ def new(name):
 @cognition_datasources.command(name='load')
 @click.option('--datasource', '-d', type=str, multiple=True)
 def load(datasource):
+
+    handler = []
+    sls_functions = {}
+
     for source in datasource:
         source_link = getattr(sources.remote, source)
         project_path = '/'.join(source_link.split('/')[3:-1])
 
         # Check CI build
         r = requests.get(os.path.join(source_link, 'config.yml'))
+        print(os.path.join(source_link, 'config.yml'))
         md = yaml.load(r.text, Loader=yaml.BaseLoader)
         build_info = requests.get(f'https://circleci.com/api/v1.1/project/github/{project_path}?circle-token={md["circle-token"]}&limit=1')
         build_status = build_info.json()[0]['status']
@@ -113,45 +118,36 @@ def load(datasource):
             print("WARNING: {} was not loaded because it failed CI".format(source))
             continue
 
-        # Download remote datasource .py file into sources folder
-        source_fname = source + '.py'
-        source_remote_url = os.path.join(source_link, source_fname)
-        r = requests.get(source_remote_url)
-        with open(os.path.join(os.path.dirname(__file__), '..', 'sources', source_fname), 'w+') as outfile:
-            outfile.write(r.text)
+        # Download remote file handler
+        handler_url = os.path.join(source_link, 'handler.py')
+        r = requests.get(handler_url)
+        for line in r.text.splitlines()[2:]:
+            handler.append(line + '\n')
 
-        # Install datasource dependencies
-        fd, path = tempfile.mkstemp()
-        req_remote_url = os.path.join(source_link, 'requirements.txt')
-        try:
-            with os.fdopen(fd, 'w') as tmp:
-                r = requests.get(req_remote_url)
-                tmp.write(r.text)
-        finally:
-            subprocess.call("pip install -r {}".format(path), shell=True)
-            os.remove(path)
+        # Build sls function config
+        sls_functions.update({
+            source: {
+                'handler': 'handler.' + source,
+                'layers': [
+                    layer_arn,
+                    md['layer-arn'],
+                ]
+            }
+        })
 
-        # Check for index
-        idx_remote_url = os.path.join(source_link, 'index.idx')
-        dat_remote_url = os.path.join(source_link, 'index.dat')
+    # Write handler.py
+    with open(os.path.join(os.path.dirname(__file__), '..', '..', 'lambda', 'handler.py'), 'a+') as outfile:
+        for line in handler:
+            outfile.write(line)
 
-        idx_r = requests.get(idx_remote_url)
-        dat_r = requests.get(dat_remote_url)
+    # Write serverless.yml
+    with open(os.path.join(os.path.dirname(__file__), '..', '..', 'serverless.yml'), 'r+') as config:
+        contents = yaml.load(config, Loader=yaml.BaseLoader)
+        contents['functions'].update(sls_functions)
 
-        if idx_r.status_code == 404 or dat_r.status_code == 404:
-            continue
+        with open(os.path.join(os.path.dirname(__file__), '..', '..', 'serverless.yml'), 'w+') as outfile:
+            yaml.dump(contents, outfile)
 
-        static_dir = os.path.join(os.path.dirname(__file__), '..', 'static')
-        if not os.path.exists(static_dir):
-            os.makedirs(static_dir)
-
-        with open(os.path.join(static_dir, '{}_rtree.idx'.format(source)), 'wb+') as outfile:
-            outfile.write(idx_r.content)
-
-        with open(os.path.join(static_dir, '{}_rtree.dat'.format(source)), 'wb+') as outfile:
-            outfile.write(dat_r.content)
-
-        print("Succesfully loaded the {} driver".format(source))
 
 @cognition_datasources.command(name='build-examples')
 def build_examples():

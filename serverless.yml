@@ -1,0 +1,29 @@
+functions:
+  worker:
+    handler: handler.worker
+    events:
+      - http:
+          path: /stac/search
+          method: post
+    layers:
+    - arn:aws:lambda:us-east-1:725820063953:layer:cognition-datasources:2
+
+provider:
+  environment:
+    SPATIALINDEX_C_LIBRARY: /opt/lib/libspatialindex_c.so.4
+  iamRoleStatementsName: cognition-datasources-role
+  iamRoleStatements:
+    - Action:
+        - lambda:InvokeFunction
+      Effect: Allow
+      Resource:
+        - arn:aws:lambda:*
+
+  name: aws
+  region: us-east-1
+  runtime: python3.6
+  stage: dev
+service: cognition-datasources-test-layer
+
+package:
+  artifact: lambda-package.zip

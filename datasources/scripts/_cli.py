@@ -71,7 +71,7 @@ def new(name):
     if os.path.exists(name):
         raise ValueError("The directory {} already exists.".format(name))
 
-    shutil.copytree(os.path.join(os.path.dirname(__file__), '..', 'template'), name)
+    shutil.copytree(os.path.join(os.path.dirname(__file__), '..', '..', 'driver'), name)
 
     with open(os.path.join(os.getcwd(), name, 'template.py'), 'r') as f:
         contents = f.read()
@@ -85,6 +85,13 @@ def new(name):
         contents = contents.replace('__TEMPLATENAME__', name)
 
         with open(os.path.join(os.getcwd(), name, 'tests.py'), 'w') as outf:
+            outf.write(contents)
+
+    with open(os.path.join(os.getcwd(), name, 'bin', 'driver-package.sh'), 'r') as f:
+        contents = f.read()
+        contents = contents.replace('__TEMPLATENAME__', name)
+
+        with open(os.path.join(os.getcwd(), name, 'bin', 'driver-package.sh'), 'w') as outf:
             outf.write(contents)
 
     os.rename(os.path.join(os.getcwd(), name, 'template.py'), os.path.join(os.getcwd(), name, '{}.py'.format(name)))

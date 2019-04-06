@@ -1,7 +1,9 @@
 #!/bin/bash
 
 # Directory used for deployment
-export DEPLOY_DIR=lambda
+export DEPLOY_DIR=layer
+
+mkdir $DEPLOY_DIR
 
 PYPATH=/var/lang/lib/python3.6/site-packages
 

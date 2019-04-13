@@ -134,8 +134,12 @@ def load(datasource):
             }
         })
 
+        # Add database layer arn if present
+        if 'db-arn' in md:
+            sls_functions[source]['layers'].append(md['db-arn'])
+
     # Write handler.py
-    with open(os.path.join(os.path.dirname(__file__), '..', '..', 'lambda', 'handler.py'), 'a+') as outfile:
+    with open(os.path.join(os.path.dirname(__file__), '..', '..', 'handler.py'), 'a+') as outfile:
         for line in handler:
             outfile.write(line)
 

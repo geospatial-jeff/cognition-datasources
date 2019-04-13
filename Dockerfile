@@ -18,11 +18,12 @@ ENV \
 WORKDIR /build
 
 # Installing cognition-datasources + requirements
-COPY requirements.txt ./
+COPY requirements-dev.txt ./
 
 RUN \
-    pip install -r requirements.txt; \
+    pip install -r requirements-dev.txt; \
     pip install git+https://github.com/geospatial-jeff/cognition-datasources.git@lambda_layers
+
 
 
 # Copy shell scripts

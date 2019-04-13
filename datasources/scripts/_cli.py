@@ -99,7 +99,8 @@ def new(name):
 
 @cognition_datasources.command(name='load')
 @click.option('--datasource', '-d', type=str, multiple=True)
-def load(datasource):
+@click.option('--local/--deployed', default=False)
+def load(datasource, local):
 
     handler = []
     sls_functions = {}
@@ -137,6 +138,25 @@ def load(datasource):
         # Add database layer arn if present
         if 'db-arn' in md:
             sls_functions[source]['layers'].append(md['db-arn'])
+
+
+        if local:
+            # Download driver file to local installation of cognition-datasources
+            driver_url = os.path.join(source_link, f"{source}.py")
+            r = requests.get(driver_url)
+            with open(os.path.join(os.path.dirname(__file__), '..', 'sources', f"{source}.py"), "w+") as driver_file:
+                driver_file.write(r.text)
+
+            # Install dependencies
+            fd, path = tempfile.mkstemp()
+            req_url = os.path.join(source_link, "requirements.txt")
+            try:
+                with os.fdopen(fd, 'w') as tmp:
+                    r = requests.get(req_url)
+                    tmp.write(r.text)
+            finally:
+                subprocess.call("pip install -r {}".format(path), shell=True)
+                os.remove(path)
 
     # Write handler.py
     with open(os.path.join(os.path.dirname(__file__), '..', '..', 'handler.py'), 'a+') as outfile:

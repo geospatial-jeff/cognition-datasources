@@ -106,11 +106,10 @@ def load(datasource):
 
     for source in datasource:
         source_link = getattr(sources.remote, source)
-        project_path = '/'.join(source_link.split('/')[3:-1])
+        project_path = '/'.join(source_link.split('/')[4:])
 
         # Check CI build
         r = requests.get(os.path.join(source_link, 'config.yml'))
-        print(os.path.join(source_link, 'config.yml'))
         md = yaml.load(r.text, Loader=yaml.BaseLoader)
         build_info = requests.get(f'https://circleci.com/api/v1.1/project/github/{project_path}?circle-token={md["circle-token"]}&limit=1')
         build_status = build_info.json()[0]['status']

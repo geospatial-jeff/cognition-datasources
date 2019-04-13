@@ -4,6 +4,7 @@ FROM lambci/lambda:build-python3.6
 # Installing system libraries
 RUN \
     yum install -y wget; \
+    yum install -y geos-devel; \ # Install geos
     yum clean all; \
     yum autoremove;
 
@@ -15,11 +16,6 @@ ENV \
 
 # Switch to build directory
 WORKDIR /build
-
-# Installing geos
-RUN \
-    yum install -y geos-devel;
-
 
 # Installing cognition-datasources + requirements
 COPY requirements.txt ./

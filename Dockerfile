@@ -4,7 +4,7 @@ FROM lambci/lambda:build-python3.6
 # Installing system libraries
 RUN \
     yum install -y wget; \
-    yum install -y geos-devel; \ # Install geos
+    yum install -y geos-devel; \
     yum clean all; \
     yum autoremove;
 

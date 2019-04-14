@@ -108,6 +108,7 @@ def load(datasource, local):
     for source in datasource:
         source_link = getattr(sources.remote, source)
         project_path = '/'.join(source_link.split('/')[4:])
+        source_link += '@master'
 
         # Check CI build
         r = requests.get(os.path.join(source_link, 'config.yml'))

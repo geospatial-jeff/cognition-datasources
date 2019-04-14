@@ -2,16 +2,16 @@
 
 # directory used for deployment
 export DEPLOY_DIR=lambda
-mkdir $DEPLOY_DIR
 
-DRIVERNAME=__TEMPLATENAME__
+DRIVERNAME=$1
 PYPATH=$PROD_LIBS/lib/python3.6/site-packages
 
 echo "Creating lambda layer"
 
 # Moving python libraries
 mkdir $DEPLOY_DIR/python
-EXCLUDE="boto3* botocore* pip* docutils* *.pyc setuptools* wheel* coverage* testfixtures* mock* *.egg-info *.dist-info __pycache__ easy_install.py"
+EXCLUDE="urllib3* s3transfer* boto3* botocore* pip* docutils* *.pyc setuptools* wheel* coverage* testfixtures* mock* *.egg-info *.dist-info __pycache__ easy_install.py"
+
 
 EXCLUDES=()
 for E in ${EXCLUDE}
@@ -25,9 +25,7 @@ rsync -ax $PYPATH/ $DEPLOY_DIR/python/ ${EXCLUDES[@]}
 mkdir -p $DEPLOY_DIR/python/datasources/sources/
 cp $DRIVERNAME.py $DEPLOY_DIR/python/datasources/sources/
 
+
 # Make lambda layer
 cd $DEPLOY_DIR
 zip -ruq ../lambda-layer.zip ./
-
-# Make lambda deployment package
-# (cd .. && zip -q lambda-deploy.zip handler.py)

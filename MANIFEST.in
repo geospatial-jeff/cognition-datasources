@@ -1,3 +1,2 @@
-include datasources/template/*
-include datasources/template/.circleci/*
-include datasources/template/docs/*
+include driver/*
+include driver/.circleci/*

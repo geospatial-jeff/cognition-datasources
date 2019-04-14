@@ -1,22 +1,22 @@
 # External Drivers
 
-1. Build docker image
+1. Add driver requirements to `requirements.txt` and `requirements-dev.txt`
+2. Build docker image
 
 ```
 docker build . -t <driver-name>:latest
 ```
 
-2. Add driver requirements to `requirements.txt` and `requirements-dev.txt`
 3. Run test cases inside docker container
 
 ```
 docker run --rm -v $PWD:/home/cognition-datasources -it <driver-name>:latest python -m unittest tests.py
 ```
 
-4. Build lambda layer and lambda deployment package
+4. Build lambda layer
 
 ```
-docker run --rm -v $PWD:/home/cognition-datasources -it <driver-name<:latest driver-package.sh
+docker run --rm -v $PWD:/home/cognition-datasources -it <driver-name<:latest driver-package.sh <driver-name>
 ```
 
 5. Deploy layer to lambda

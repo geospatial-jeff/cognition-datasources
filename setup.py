@@ -7,7 +7,7 @@ setup(name="cognition_datasources",
       version='0.2',
       author='Jeff Albrecht',
       author_email='geospatialjeff@gmail.com',
-      packages=find_packages(exclude=['docs']),
+      packages=find_packages(exclude=['docs', 'bin'], include=['driver']),
       install_requires = requirements,
       entry_points= {
           "console_scripts": [

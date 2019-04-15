@@ -1,24 +1,35 @@
-**Add CircleCI badge to first line of file**
+# External Drivers
 
-## MyDataSource
+1. Add driver requirements to `requirements.txt` and `requirements-dev.txt`
+2. Build docker image
 
-| Parameter | Status |
-| ----------| ------ |
-| Spatial | :heavy_check_mark: |
-| Temporal | :heavy_check_mark: |
-| Properties | :heavy_check_mark: |
-| **kwargs | [limit] |
+```
+docker build . -t <driver-name>:latest
+```
 
-##### Properties
-| Property | Type | Example |
-|--------------------------|-------|-------------|
-| eo:gsd | float | 10.0 |
-| eo:epsg | int | 32614 |
-| eo:instrument | str | 'MSI' |
-| eo:platform | str | 'sentinel-2b' |
-| eo:off_nadir | float | 0.0 |
-| eo:cloud_cover | float | 100.0 |
-| sentinel:utm_zone | int | 13 |
-| sentinel:latitude_band | str | 'T' |
-| sentinel:grid_square | str | 'GJ' |
-| sentinel:sequence | str | '0' |
+3. Run test cases inside docker container
+
+```
+docker run --rm -v $PWD:/home/cognition-datasources -it <driver-name>:latest python -m unittest tests.py
+```
+
+4. Build lambda layer
+
+```
+docker run --rm -v $PWD:/home/cognition-datasources -it <driver-name<:latest driver-package.sh <driver-name>
+```
+
+5. Deploy layer to lambda
+```
+aws lambda publish-layer-version \
+    --layer-name <driver-name> \
+    --zip-file fileb://lambda-deploy.zip
+```
+
+6. Make layer public (do this after deploying a new version)
+```
+aws lambda add-layer-version-permission --layer-name <driver-name> \
+    --statement-id public --version-number 1 --principal '*' \
+    --action lambda:GetLayerVersion
+```
+

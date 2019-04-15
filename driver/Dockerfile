@@ -16,4 +16,8 @@ RUN \
 
 COPY bin/* /usr/local/bin/
 
+# Giving exec permissions to script
+RUN \
+    chmod +x /usr/local/bin/driver-package.sh
+
 WORKDIR /home/cognition-datasources

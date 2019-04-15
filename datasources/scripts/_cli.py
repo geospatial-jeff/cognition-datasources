@@ -73,28 +73,19 @@ def new(name):
 
     shutil.copytree(os.path.join(os.path.dirname(__file__), '..', '..', 'driver'), name)
 
-    with open(os.path.join(os.getcwd(), name, 'template.py'), 'r') as f:
-        contents = f.read()
-        contents = contents.replace('__TEMPLATENAME__', name)
+    fpaths = [
+        os.path.join(os.getcwd(), name, 'template.py'),
+        os.path.join(os.getcwd(), name, 'tests.py'),
+        os.path.join(os.getcwd(), name, 'bin', 'driver-package.sh'),
+    ]
 
-        with open(os.path.join(os.getcwd(), name, 'template.py'), 'w') as outf:
-            outf.write(contents)
+    for file in fpaths:
+        replace_template_name(file, name)
 
-    with open(os.path.join(os.getcwd(), name, 'tests.py'), 'r') as f:
-        contents = f.read()
-        contents = contents.replace('__TEMPLATENAME__', name)
+    os.rename(fpaths[0], os.path.join(os.path.dirname(fpaths[0]), f'{name}.py'))
 
-        with open(os.path.join(os.getcwd(), name, 'tests.py'), 'w') as outf:
-            outf.write(contents)
 
-    with open(os.path.join(os.getcwd(), name, 'bin', 'driver-package.sh'), 'r') as f:
-        contents = f.read()
-        contents = contents.replace('__TEMPLATENAME__', name)
 
-        with open(os.path.join(os.getcwd(), name, 'bin', 'driver-package.sh'), 'w') as outf:
-            outf.write(contents)
-
-    os.rename(os.path.join(os.getcwd(), name, 'template.py'), os.path.join(os.getcwd(), name, '{}.py'.format(name)))
 
 
 @cognition_datasources.command(name='load')
@@ -220,3 +211,11 @@ def list():
     print([x.__name__ for x in sources])
 
 
+# Some helper methods used by the CLI
+def replace_template_name(fpath, name):
+    with open(fpath, 'r') as f:
+        contents = f.read()
+        contents = contents.replace('__TEMPLATENAME__', name)
+
+        with open(fpath, 'w') as outf:
+            outf.write(contents)

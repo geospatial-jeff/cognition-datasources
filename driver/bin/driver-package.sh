@@ -3,7 +3,7 @@
 # directory used for deployment
 export DEPLOY_DIR=lambda
 
-DRIVERNAME=$1
+DRIVERNAME=__TEMPLATENAME__
 PYPATH=$PROD_LIBS/lib/python3.6/site-packages
 
 echo "Creating lambda layer"

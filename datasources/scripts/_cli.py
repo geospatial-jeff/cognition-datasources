@@ -77,6 +77,7 @@ def new(name):
         os.path.join(os.getcwd(), name, 'template.py'),
         os.path.join(os.getcwd(), name, 'tests.py'),
         os.path.join(os.getcwd(), name, 'bin', 'driver-package.sh'),
+        os.path.join(os.getcwd(), name, 'handler.py')
     ]
 
     for file in fpaths:

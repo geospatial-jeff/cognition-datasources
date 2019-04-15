@@ -9,8 +9,8 @@ PYPATH=$PROD_LIBS/lib/python3.6/site-packages
 echo "Creating lambda layer"
 
 # Moving python libraries
-mkdir $DEPLOY_DIR/python
-EXCLUDE="urllib3* s3transfer* boto3* botocore* pip* docutils* *.pyc setuptools* wheel* coverage* testfixtures* mock* *.egg-info *.dist-info __pycache__ easy_install.py"
+mkdir -p $DEPLOY_DIR/python
+EXCLUDE="click* urllib3* s3transfer* boto3* botocore* pip* docutils* *.pyc setuptools* wheel* coverage* testfixtures* mock* *.egg-info *.dist-info __pycache__ easy_install.py"
 
 
 EXCLUDES=()

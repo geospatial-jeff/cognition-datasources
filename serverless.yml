@@ -15,9 +15,11 @@ provider:
   iamRoleStatements:
     - Action:
         - lambda:InvokeFunction
+        - s3:*
       Effect: Allow
       Resource:
         - arn:aws:lambda:*
+        - aws:s3:::*
 
   name: aws
   region: us-east-1

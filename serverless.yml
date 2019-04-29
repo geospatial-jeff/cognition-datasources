@@ -1,3 +1,14 @@
+########################
+# Edit these variables #
+########################
+custom:
+  service-name: cognition-datasources-deploy
+  stage: dev
+
+####################################################################################
+# Don't edit below (unless adding environment variables to `provider.environment`) #
+####################################################################################
+
 functions:
   worker:
     handler: handler.worker
@@ -14,6 +25,7 @@ provider:
     SERVICE_STAGE: ${self:provider.stage}
     SERVICE_NAME: ${self:service}
     SERVICE_REGION: ${self:provider.region}
+
   iamRoleStatementsName: cognition-datasources-role
   iamRoleStatements:
     - Action:
@@ -27,7 +39,9 @@ provider:
   name: aws
   region: us-east-1
   runtime: python3.6
-  stage: dev
-service: cognition-datasources-test-layer
+  stage: ${self:custom.stage}
+
+service: ${self:custom.service-name}
+
 package:
   artifact: lambda-service-package.zip

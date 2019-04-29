@@ -1,12 +1,13 @@
+import os
 from multiprocessing import Process, Pipe
 import json
 
 from datasources import Manifest
 import boto3
 
-service='cognition-datasources-test-layer'
-stage = 'dev'
-region = 'us-east-1'
+service = os.environ['SERVICE_NAME']
+stage = os.environ['SERVICE_STAGE']
+region = os.environ['SERVICE_REGION']
 
 lambda_client = boto3.client('lambda')
 

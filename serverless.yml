@@ -10,7 +10,10 @@ functions:
 
 provider:
   environment:
-    SPATIALINDEX_C_LIBRARY: /opt/lib/libspatialindex_c.so.4
+    SPATIALINDEX_C_LIBRARY: /opt/lib/libspatialindex_c.so.
+    SERVICE_STAGE: ${self:provider.stage}
+    SERVICE_NAME: ${self:service}
+    SERVICE_REGION: ${self:provider.region}
   iamRoleStatementsName: cognition-datasources-role
   iamRoleStatements:
     - Action:
@@ -26,6 +29,5 @@ provider:
   runtime: python3.6
   stage: dev
 service: cognition-datasources-test-layer
-
 package:
   artifact: lambda-service-package.zip

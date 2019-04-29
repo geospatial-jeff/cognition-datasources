@@ -99,6 +99,7 @@ def load(datasource, local):
     sls_functions = {}
 
     for source in datasource:
+        print("Loading the {} driver.".format(source))
         source_link = getattr(sources.remote, source)
         project_path = '/'.join(source_link.split('/')[4:])
         source_link += '@master'

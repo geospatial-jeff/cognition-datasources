@@ -28,4 +28,4 @@ provider:
 service: cognition-datasources-test-layer
 
 package:
-  artifact: lambda-package.zip
+  artifact: lambda-layer.zip

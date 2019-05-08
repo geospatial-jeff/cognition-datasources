@@ -64,7 +64,6 @@ def search(spatial, start_date, end_date, properties, datasource, debug, output)
 
     return 0
 
-
 @cognition_datasources.command(name='new')
 @click.option('--name', '-n', type=str)
 def new(name):
@@ -85,10 +84,6 @@ def new(name):
         replace_template_name(file, name)
 
     os.rename(fpaths[0], os.path.join(os.path.dirname(fpaths[0]), f'{name}.py'))
-
-
-
-
 
 @cognition_datasources.command(name='load')
 @click.option('--datasource', '-d', type=str, multiple=True)
@@ -185,12 +180,14 @@ def build_examples():
 @cognition_datasources.command(name='build-docs')
 def build_docs():
     from datasources.sources import remote
+
     remote_assets = {k: v for (k, v) in remote.__dict__.items() if type(v) == str and 'https' in v}
-    docs_rel_path = 'docs/README.md'
+    docs_rel_path = 'README.md'
 
     build_status = []
     with open(os.path.join(os.path.dirname(__file__), '..', '..', 'docs', 'datasource-reference.md'), 'wb+') as docfile:
         for item in remote_assets:
+            print("Pulling docs for {}.".format(item))
             r = requests.get(os.path.join(remote_assets[item], docs_rel_path))
             docfile.write(r.content)
             docfile.write(b"\n---\n")
@@ -199,6 +196,7 @@ def build_docs():
             if 'CircleCI' in lines[0]:
                 build_status.append({'name': item, 'status': lines[0]})
 
+    print("Finishing up.")
     with open(os.path.join(os.path.dirname(__file__), '..', '..', 'docs', 'datasource-status.md'), 'w+') as statusfile:
         statusfile.write("# Driver Status\n")
         statusfile.write("| Driver Name | Status |\n")

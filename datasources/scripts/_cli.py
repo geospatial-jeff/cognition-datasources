@@ -169,6 +169,7 @@ def build_examples():
     example_rel_path = 'docs/example.json'
 
     def _fetch_examples(data):
+        print("Pulling example for {}.".format(data['name']))
         with open(os.path.join(os.path.dirname(__file__), '..', '..', 'docs', 'examples', '{}.json'.format(data['name'])),
                   'wb+') as examplefile:
             r = requests.get(os.path.join(data['url'], example_rel_path))

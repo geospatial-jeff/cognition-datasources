@@ -103,7 +103,7 @@ import json
 endpoint = 'https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/stac/search'
 
 payload = {
-    'spatial': {'type:': 'Polygon': 'coordinates': [[...]]},
+    'intersects': {'type:': 'Polygon': 'coordinates': [[...]]},
     'temporal': ("2018-10-30", "2018-12-31"),
     'properties': {'eo:cloud_cover': {'lte': 5}},
     'datasources': ['Landsat8', 'Sentinel2']
@@ -118,7 +118,7 @@ response = r.json()
 from datasources import Manifest
 
 payload = {
-    'spatial': {'type:': 'Polygon': 'coordinates': [[...]]},
+    'intersects': {'type:': 'Polygon': 'coordinates': [[...]]},
     'temporal': ("2018-10-30", "2018-12-31"),
     'properties': {'eo:cloud_cover': {'lte': 5}},
     'datasources': ['Landsat8', 'Sentinel2']

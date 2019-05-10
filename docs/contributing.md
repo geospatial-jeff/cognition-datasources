@@ -348,9 +348,9 @@ cd spatial-db
 
 **(2). Follow the [database-docs](https://github.com/geospatial-jeff/lambda-layer-spatial-db/blob/master/docs/README.md) to package and deploy your spatial coverages as an AWS Lambda Layer.**
 
-**(3). Update your driver's `Dockerfile` to pull from `geospatial-jeff/cognition-datasources-db:latest`.**
+**(3). Update your driver's `Dockerfile` to pull from `geospatialjeff/cognition-datasources-db:latest`.**
 
-**(4). Update your CircleCI configurations (`.circleci/config.yml`) docker image to pull from `geospatial-jeff/cognition-datasources-db:latest`**
+**(4). Update your CircleCI configurations (`.circleci/config.yml`) docker image to pull from `geospatialjeff/cognition-datasources-db:latest`**
 
 **(5). Add a `db-arn` key in your driver's configuration (`config.yml`) which maps to your database layer ARN.**
 

@@ -22,7 +22,7 @@ COPY requirements-dev.txt ./
 
 RUN \
     pip install -r requirements-dev.txt; \
-    pip install git+https://github.com/geospatial-jeff/cognition-datasources.git@lambda_layers
+    pip install git+https://github.com/geospatial-jeff/cognition-datasources.git
 
 
 

@@ -1,0 +1,46 @@
+########################
+# Edit these variables #
+########################
+custom:
+  service-name: cognition-datasources-deploy
+  stage: dev
+
+####################################################################################
+# Don't edit below (unless adding environment variables to `provider.environment`) #
+####################################################################################
+
+functions:
+  worker:
+    handler: handler.worker
+    events:
+      - http:
+          path: /stac/search
+          method: post
+    layers:
+    - arn:aws:lambda:us-east-1:725820063953:layer:cognition-datasources:6
+
+provider:
+  environment:
+    SERVICE_STAGE: ${self:provider.stage}
+    SERVICE_NAME: ${self:service}
+    SERVICE_REGION: ${self:provider.region}
+
+  iamRoleStatementsName: cognition-datasources-role
+  iamRoleStatements:
+    - Action:
+        - lambda:InvokeFunction
+        - s3:*
+      Effect: Allow
+      Resource:
+        - arn:aws:lambda:*
+        - arn:aws:s3:::*
+
+  name: aws
+  region: us-east-1
+  runtime: python3.6
+  stage: ${self:custom.stage}
+
+service: ${self:custom.service-name}
+
+package:
+  artifact: lambda-service-package.zip

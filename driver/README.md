@@ -1,6 +1,6 @@
 **Add CircleCI badge to first line of file**
 
-## MyDataSource
+## __TEMPLATENAME__
 
 | Parameter | Status |
 | ----------| ------ |

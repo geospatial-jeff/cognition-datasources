@@ -44,17 +44,16 @@
 - There is no source API for this datasource, instead an index is created with the [dg-open-data-scraper](https://github.com/geospatial-jeff/dg-open-data-scraper).
 ---
 [![CircleCI](https://circleci.com/gh/geospatial-jeff/cognition-datasources-elevationtiles.svg?style=svg)](https://circleci.com/gh/geospatial-jeff/cognition-datasources-elevationtiles)
-
 ## Elevation Tiles
 
-| Parameter | Status |
+ | Parameter | Status |
 | ----------| ------ |
 | Spatial | :heavy_check_mark: |
 | Temporal | :x: |
 | Properties | :heavy_check_mark: |
 | **kwargs | [limit, zoom] |
 
-##### Properties
+ ##### Properties
 | Property | Type | Example |
 |--------------------------|-------|-------------|
 | eo:gsd | float | 305.74 |
@@ -64,7 +63,7 @@
 | legacy:y | int | 91 |
 | legacy:z | int | 8 |
 
-##### Notes
+ ##### Notes
 - The source API is a XYZ tiled elevation service.  The `zoom` kwarg changes the zoom level being queried.
 - The source API doesn't support temporal data.  Can search with temporal but it is not honored.
 ---
@@ -136,6 +135,7 @@
 | eo:epsg | int | 26914 |
 | eo:instrument | str | 'Leica ADS100' |
 ---
+
 [![CircleCI](https://circleci.com/gh/geospatial-jeff/cognition-datasources-sentinel1.svg?style=svg)](https://circleci.com/gh/geospatial-jeff/cognition-datasources-sentinel1)
 
 ## Sentinel1
@@ -160,7 +160,7 @@
 ---
 [![CircleCI](https://circleci.com/gh/geospatial-jeff/cognition-datasources-sentinel2.svg?style=svg)](https://circleci.com/gh/geospatial-jeff/cognition-datasources-sentinel2)
 
-## Sentinel2
+## Sentinel1
 
 | Parameter | Status |
 | ----------| ------ |

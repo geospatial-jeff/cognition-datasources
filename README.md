@@ -1,61 +1,47 @@
-# cognition-datasources
-
 ## About
-This library defines a STAC-compliant standardized interface for searching geospatial assets, primarily remotely sensed imagery.  The [Spatio-Temporal-Asset-Catalog (STAC)](https://github.com/radiantearth/stac-spec) specification provides common metadata and API schemas to search and access geospatial data.  The standardized interface used by the library is based on the STAC spec and allows searching across three dimensions:
 
-- **Spatial:** Find all assets which intersect a bounding box.
-- **Temporal:** Find all assets acquired within a temporal window.
-- **Properties:** Find all assets with certain  metadata.
+This library defines a pluggable, STAC-compliant, service for searching geospatial assets, primarily remotely sensed imagery, and serves two primary purposes:
 
-Not all commonly used datasources are currently STAC-compliant.  In such cases, the library maintains a standardized search interface by wrapping the API with a STAC-compatible API which parses the initial search parameters into a format compatible with the underlying API.  A request to the API is sent and the response is parsed into a STAC Item and returned to the user.  The table below of supported datasources states which are STAC-compliant.
+1. Define a pluggable driver interface (similar to GraphQL resolvers) for wrapping the STAC spec around legacy datasources.
+2. Provide a framework for loading / executing drivers both locally and in the cloud.
 
-![title](docs/images/api-diagram.png)
+Each driver translates the STAC-compliant request into a format compatible with the underlying API while translating the API response to a valid STAC Item.  Drivers are packaged and deployed to AWS Lambda and a single API Gateway endpoint is created which allows searching the loaded datasources.  The goal is to create an extensible service which allows users to integrate their datasets with the STAC ecosystem without having to change how their data is stored and queried.
 
-#### Datasource Drivers
-The interface defined by the library is extended by datasource drivers which are defined in external github repositories and loaded into the library through a command line interface.  Similar to how drivers control hardware, the logic implemented in the datasource driver influences how cognition-datasources accesses the underlying datasource.  Each driver is expected to follow a specific pattern and pass a standard set of test cases (enforced with CircleCI).  Check out the [contribution guidelines](/docs/contributing.md) for a guide on how to develop your own datasource driver!
+![title](docs/images/service-diagram.png?style=centerme)
 
-
-## Setup
+## Installation
 ```
-# Install library
-pip install git+https://github.com/geospatial-jeff/cognition-datasources
+git clone https://github.com/geospatial-jeff/cognition-datasources
+cd cognition-datasources
+python setup.py develop
+```
 
+## Deployment
+```
 # Load datasources
-cognition-datasources load -d Landsat8 -d Sentinel2
+cognition-datasources -d Landsat8 -d Sentinel2 -d SRTM -d NAIP
+
+# Build docker container
+docker build . -t cognition-datasources:latest
+
+# Package service
+docker run --rm -v $PWD:/home/cognition-datasources -it cognition-datasources:latest package-service.sh
+
+# Deploy to AWS
+sls deploy -v
 ```
+Read the [deployment docs](./docs/deployment.md) for more information on deployment.
 
 ## Usage
+The deployment generates an AWS API Gateway endpoint which supports STAC-compliant searches of the loaded datasources through the `/stac/search` endpoint (POST).  Read the [API docs](./docs/README.md) for usage details.
 
-#### Python
-```python
-from datasources import Manifest
-
-# Create manifest
-manifest = Manifest()
-
-# Search arguments
-spatial = {"type": "Polygon", "coordinates": [[...]]}
-temporal = ("2018-10-30", "2018-12-31")
-properties = {'eo:cloud_cover': {'lt': 10}}
-
-# Create searches for Landsat8 and Sentinel2
-manifest['Landsat8'].search(spatial, temporal=temporal, properties=properties)
-manifest['Sentinel2'].search(spatial, temporal=temporal, properties=properties)
-
-# Execute searches
-response = manifest.execute()
-```
-
-#### CLI
-```
-cognition-datasources search xmin ymin xmax ymax --start-date "2018-10-30" --end-date "2018-12-31" -d Landsat8 -d Sentinel2 --output response.json
-```
+A live example lives [here](https://github.com/geospatial-jeff/cognition-datasources-api).
 
 ## Testing
-Each driver must pass a [standard set of test cases](datasources/tests.py) and uses CircleCI to ensure only working drivers are loaded into the library.  View the status of each driver [here](/docs/datasource-status.md).
+Each driver must pass a [standard set of test cases](./datasources/tests.py) and uses CircleCI to ensure only working drivers are loaded into the library.  View the status of each driver [here](./docs/datasource-status.md).
 
-## Documentation
-Read the [quickstart](./docs/quickstart.ipynb) and [documentation](./docs).
+## Contributing
+Check out the [contributing docs](./docs/contributing.md) for step-by-step guide for building your own driver.
 
 ## Supported Datasource Drivers
 | Name | Source | STAC-Compliant | Notes |

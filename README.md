@@ -35,6 +35,8 @@ Read the [deployment docs](./docs/deployment.md) for more information on deploym
 ## Usage
 The deployment generates an AWS API Gateway endpoint which supports STAC-compliant searches of the loaded datasources through the `/stac/search` endpoint (POST).  Read the [API docs](./docs/README.md) for usage details.
 
+A live example lives [here](https://github.com/geospatial-jeff/cognition-datasources-api).
+
 ## Testing
 Each driver must pass a [standard set of test cases](./datasources/tests.py) and uses CircleCI to ensure only working drivers are loaded into the library.  View the status of each driver [here](./docs/datasource-status.md).
 

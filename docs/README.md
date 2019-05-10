@@ -1,5 +1,12 @@
 # API Docs
-The interface allows searching datasources with **spatial**, **temporal**, and **properties** parameters.  Spatial is always required.  Temporal is always accepted but not always honored (not all spatial datasources are temporal).  Properties is always accepted but varies across drivers as different APIs have different responses.
+
+The [Spatio-Temporal-Asset-Catalog (STAC)](https://github.com/radiantearth/stac-spec) specification provides common metadata and API schemas to search and access geospatial data.  The standardized interface used by the library is based on the STAC spec and allows searching across three dimensions:
+
+- **Spatial:** Find all assets which intersect a bounding box.
+- **Temporal:** Find all assets acquired within a temporal window.
+- **Properties:** Find all assets with certain  metadata.
+
+Spatial is always required.  Temporal is always accepted but not always honored (not all spatial datasources are temporal).  Properties is always accepted but varies across drivers as different APIs have different responses.
 
 ### Spatial
 The standard representation of space is a [GeoJSON geometry object](https://tools.ietf.org/html/rfc7946#section-3.1):
@@ -58,6 +65,12 @@ The following table shows which STAC properties are available when querying each
 | USGS 3DEP | [eo:epsg, pc:count, pc:type, pc:encoding] | [legacy:scan] | [limit] |
 | Microsoft Building Footprints | [eo:epsg] | [legacy:area, legacy:length, legacy:state] | [limit] |
 
+Query strings are constructed using a nested dictionary notation.  For example, returning all items with a cloud cover of less than 5% looks like:
+
+```
+{'eo:cloud_cover: {'lt': 5}}
+```
+
 ### Response
 The response is a dictionary of feature collections with a key for each searched datasource.  Each feature in the feature collection is a STAC Item representing a single asset returned by the query.  Items returned from APIs which are not STAC compliant do not implement the standard `links` property, as there is no underlying STAC catalog to link with.  Example STAC Items for each datasource can be found in the [examples folder](./examples).
 
@@ -80,3 +93,46 @@ The response is a dictionary of feature collections with a key for each searched
 
 ### Licencing and Data Rights
 This library uses the [Apache License 2.0](https://choosealicense.com/licenses/apache-2.0/) which allows for commercial use but not all datasources exposed by the library are licensed for commercial use.  Please refer to the license of the underlying datasource before using commercially.
+
+### Usage Examples
+#### Cloud Deployment
+```python
+import requests
+import json
+
+endpoint = 'https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/stac/search'
+
+payload = {
+    'spatial': {'type:': 'Polygon': 'coordinates': [[...]]},
+    'temporal': ("2018-10-30", "2018-12-31"),
+    'properties': {'eo:cloud_cover': {'lte': 5}},
+    'datasources': ['Landsat8', 'Sentinel2']
+}
+
+r = requests.post(endpoint, data=json.dumps(payload))
+response = r.json()
+```
+
+#### Local Deployment
+```python
+from datasources import Manifest
+
+payload = {
+    'spatial': {'type:': 'Polygon': 'coordinates': [[...]]},
+    'temporal': ("2018-10-30", "2018-12-31"),
+    'properties': {'eo:cloud_cover': {'lte': 5}},
+    'datasources': ['Landsat8', 'Sentinel2']
+}
+
+manifest = Manifest()
+manifest['Landsat8'].search(**payload)
+manifest['Sentinel2'].search(**payload)
+
+response = manifest.execute()
+```
+
+Or with the CLI:
+
+```
+cognition-datasources search xmin ymin xmax ymax --start-date "2018-10-30" --end-date "2018-12-31" -d Landsat8 -d Sentinel2 --output response.json
+```

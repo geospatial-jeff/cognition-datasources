@@ -46,6 +46,10 @@ class BaseTestCases(unittest.TestCase):
         self.manifest[self.name].search(self.spatial)
         response = self.manifest.execute()
 
+        # Buffering the input geometry to account for small discrepencies in S2 (especially with large area searches)
+        # This test passes if all returned geometries are within 3% of the average length of the polygon.
+        buffered_geom = self.spatial_geom.buffer(0.03 * self.spatial_geom.length / 4)
+
         # Confirming that each output feature intersects input
         for feat in response[self.name]['features']:
             if self.spatial_mode == 'geometry':
@@ -57,7 +61,7 @@ class BaseTestCases(unittest.TestCase):
                                       [feat['bbox'][0], feat['bbox'][1]],
                                       [feat['bbox'][0], feat['bbox'][3]]])
 
-            self.assertTrue(asset_geom.intersects(self.spatial_geom))
+            self.assertTrue(asset_geom.intersects(buffered_geom))
 
     def test_temporal_search(self):
         self.manifest.flush()

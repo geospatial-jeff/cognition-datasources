@@ -8,7 +8,7 @@ jobs:
     docker:
       # specify the version you desire here
       # use `-browsers` prefix for selenium tests, e.g. `3.6.1-browsers`
-      - image: circleci/python:3.6.1
+      - image: geospatialjeff/cognition-datasources:latest
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -30,15 +30,14 @@ jobs:
       - run:
           name: install dependencies
           command: |
-            python3 -m venv venv
-            . venv/bin/activate
-            sudo apt-get install libspatialindex-dev
             pip install -r requirements-dev.txt
 
-#      - run:
-#          name: "Setup custom environment variables"
-#          command: |
-#            echo 'export HELLO="WORLD"' >> $BASH_ENV
+      - run:
+          name: "Setup custom environment variables"
+          command: |
+            echo 'export LAMBDA_DB_PATH="/root/repo/spatial-db/lambda_db/database.fs"' >> $BASH_ENV
+            echo 'export PYTHONPATH="${PYTHONPATH}:/root/repo/spatial-db/lambda_db/"' >> $BASH_ENV
+
 
 
 #      - save_cache:
@@ -54,8 +53,7 @@ jobs:
       - run:
           name: run tests
           command: |
-            . venv/bin/activate
-            python -m unittest tests.py
+            python3 -m unittest tests.py
 
       - store_artifacts:
           path: test-reports

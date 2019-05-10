@@ -7,7 +7,7 @@ This library defines a pluggable, STAC-compliant, service for searching geospati
 
 Each driver translates the STAC-compliant request into a format compatible with the underlying API while translating the API response to a valid STAC Item.  Drivers are packaged and deployed to AWS Lambda and a single API Gateway endpoint is created which allows searching the loaded datasources.  The goal is to create an extensible service which allows users to integrate their datasets with the STAC ecosystem without having to change how their data is stored and queried.
 
-![title](docs/images/service-diagram.png)
+![title](docs/images/service-diagram.png?style=centerme)
 
 ## Installation
 ```

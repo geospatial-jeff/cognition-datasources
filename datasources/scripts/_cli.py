@@ -44,7 +44,6 @@ def search(spatial, start_date, end_date, properties, datasource, debug, output)
 
     manifest = Manifest()
     for source in datasource:
-        manifest.load_source(getattr(sources, source))
         manifest[source].search(geoj, temporal=temporal, properties=properties, limit=10)
 
     if debug:

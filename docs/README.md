@@ -118,10 +118,9 @@ response = r.json()
 from datasources import Manifest
 
 payload = {
-    'intersects': {'type:': 'Polygon': 'coordinates': [[...]]},
+    'spatial': {'type:': 'Polygon': 'coordinates': [[...]]},
     'temporal': ("2018-10-30", "2018-12-31"),
     'properties': {'eo:cloud_cover': {'lte': 5}},
-    'datasources': ['Landsat8', 'Sentinel2']
 }
 
 manifest = Manifest()

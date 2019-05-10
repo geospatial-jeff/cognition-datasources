@@ -356,7 +356,7 @@ cd spatial-db
 
 You can now perform a basic bounding box query on the packaged spatial coverages from within our driver.  For an implementation example, see the [NAIP driver](https://github.com/geospatial-jeff/cognition-datasources-naip).
 
-### How Does it Work?
+### How It Works
 Upon initialization, cognition-datasources uses a [simple loader](../datasources/sources/__init__.py) (see `collections.load_sources`) which loads all drivers found in the `./datasources/sources` folder.  When installing locally, the driver file (`FakeSat.py`) is moved into the `sources` folder which allows local calls to cognition-datasources.  The serverless deployment packages each datasource as a lambda function which takes advantage of how AWS Lambda Layers are merged at runtime.
 
 ![title](images/lambda-environment.png)

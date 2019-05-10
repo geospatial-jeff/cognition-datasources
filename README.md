@@ -13,7 +13,7 @@ Each driver translates the STAC-compliant request into a format compatible with 
 ```
 git clone https://github.com/geospatial-jeff/cognition-datasources
 cd cognition-datasources
-python setup.py install
+python setup.py develop
 ```
 
 ## Deployment

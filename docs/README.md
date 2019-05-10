@@ -1,5 +1,12 @@
 # API Docs
-The interface allows searching datasources with **spatial**, **temporal**, and **properties** parameters.  Spatial is always required.  Temporal is always accepted but not always honored (not all spatial datasources are temporal).  Properties is always accepted but varies across drivers as different APIs have different responses.
+
+The [Spatio-Temporal-Asset-Catalog (STAC)](https://github.com/radiantearth/stac-spec) specification provides common metadata and API schemas to search and access geospatial data.  The standardized interface used by the library is based on the STAC spec and allows searching across three dimensions:
+
+- **Spatial:** Find all assets which intersect a bounding box.
+- **Temporal:** Find all assets acquired within a temporal window.
+- **Properties:** Find all assets with certain  metadata.
+
+Spatial is always required.  Temporal is always accepted but not always honored (not all spatial datasources are temporal).  Properties is always accepted but varies across drivers as different APIs have different responses.
 
 ### Spatial
 The standard representation of space is a [GeoJSON geometry object](https://tools.ietf.org/html/rfc7946#section-3.1):

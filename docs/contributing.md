@@ -132,7 +132,7 @@ Our fake API will have a simple response:
 }
 ```
 
-We can see that there are both spatial and temporal elements as well as additional properties we can map to the STAC spec (eo:gsd and eo:epsg).  We will use the `search` and `execute` methods to wrap the STAC-spec around the FakeSat api.  You are free to implement this logic however you like, as long as you adhere to the standard input and output patterns.
+We can see that there are both spatial and temporal elements as well as additional properties we can map to the STAC spec (eo:gsd and eo:epsg).  Any properties which don't fit nicely into the STAC spec may be mapped to the legacy extension.  We will use the `search` and `execute` methods to wrap the STAC-spec around the FakeSat api.  You are free to implement this logic however you like, as long as you adhere to the standard input and output patterns.
 
 ```python
 import requests
@@ -173,8 +173,9 @@ class FakeSat(Datasource):
                 api_request.update({'gsd': stac_query.properties['eo:gsd']['eq']})
             if 'eo:epsg' in keys:
                 api_request.update({'epsg': stac_query.properties['eo:epsg']['eq']})
+            # Use the legacy collection for keys that don't map to STAC
             if 'legacy:processing_level' in keys:
-                api_request.update({'legacy:processing': stac_query.properties['legacy:processing']['eq']})
+                api_request.update({'processing': stac_query.properties['legacy:processing']['eq']})
         
         # Append to manifest
         self.manifest.searches.append([self, api_request])
@@ -259,7 +260,15 @@ class FakeSatTestCases(tests.BaseTestCases):
         self.limit = 10
 ```
 
-You can add additional test cases as needed.
+You can add additional test cases as needed.  The easiest way to run test cases is via Docker:
+
+```
+# Build Docker container
+docker build . -t fakesat-driver:latest
+
+# Run tests
+docker run --rm -v $PWD:/home/cognition-datasources -it fakesat-driver:latest python -m unittest tests.py
+```
 
 **(4). Update `requirements.txt` and `requirements-dev.txt` with any dependencies required by your driver.**
 
@@ -311,7 +320,9 @@ aws lambda add-layer-version-permission --layer-name fakesat-driver \
     --action lambda:GetLayerVersion
 ```
 
-**(9). Register your driver in cognition-datasources via pull request**
+**(10). Add your layer's arn to `config.yml`, making sure to include the version tag.**
+
+**(11). Register your driver in cognition-datasources via pull request**
 Register your driver in [datasources.sources.__init__.py](../datasources/sources/__init__.py) by creating a class attribute in the `remote` object containing the url to the driver's master branch.  Make sure the url is pointing to [jsDelivr](https://www.jsdelivr.com/).  
 
 ```python
@@ -322,8 +333,8 @@ class remote(object):
 
 Submit the pull request into dev and your driver will be included with the next release!  Another user can load our fake driver with `cognition-datasources load -d FakeSat`!
 
-### Additional Notes
-##### Spatial Handling
+## Additional Notes
+### Spatial Handling
 A common solution when working with datasources which don't directly expose spatial queries is to save a spatial coverage of the dataset to a database (ex. PostGIS).  This isn't a viable option for cognition-datasources for several reasons.  The library supports packaging spatial coverages with your driver through an [AWS Lambda Spatial Database](https://github.com/geospatial-jeff/lambda-layer-spatial-db).  The coverage is written to disk and saved to an AWS Lambda Layer which is loaded by cognition-datasources in addition to the driver layer itself.
 
 Let's pretend the FakeSat API wasn't an API but a FTP server with a flat file structure of images.  In order to expose a spatial query on the underlying dataset, we can write a program which crawls the FTP server and generates spatial coverages from image metadata.  We can then package the spatial coverages with our driver to satisfy the spatial requirements of the STAC query.
@@ -345,9 +356,9 @@ cd spatial-db
 
 You can now perform a basic bounding box query on the packaged spatial coverages from within our driver.  For an implementation example, see the [NAIP driver](https://github.com/geospatial-jeff/cognition-datasources-naip).
 
-##### How Does it Work?
+### How Does it Work?
 Upon initialization, cognition-datasources uses a [simple loader](../datasources/sources/__init__.py) (see `collections.load_sources`) which loads all drivers found in the `./datasources/sources` folder.  When installing locally, the driver file (`FakeSat.py`) is moved into the `sources` folder which allows local calls to cognition-datasources.  The serverless deployment packages each datasource as a lambda function which takes advantage of how AWS Lambda Layers are merged at runtime.
 
 ![title](images/lambda-environment.png)
 
-Each lambda function pulls from two lambda layers (three if packaged with spatial coverages): the cognition-datasources layer and the driver layer.  When the layers are merged at runtime, the driver file is placed into the `./datasources/sources` folder which allows cognition-datasources to successfully load the driver inside `handler.py`.
+Each lambda function pulls from two lambda layers (three if packaged with spatial coverages): the cognition-datasources layer and the driver layer.  When the layers are merged at runtime, the driver file is placed into the appropriate folder which allows cognition-datasources to successfully load the driver inside `handler.py`.

@@ -2,9 +2,8 @@
 
 This library defines a pluggable, STAC-compliant, service for searching geospatial assets, primarily remotely sensed imagery, and serves two primary purposes:
 
-**1. Define a pluggable driver interface (similar to GraphQL resolvers) for wrapping the STAC spec around legacy datasources.**
-
-**2. Provide a framework for loading / executing drivers both locally and in the cloud.**
+1. Define a pluggable driver interface (similar to GraphQL resolvers) for wrapping the STAC spec around legacy datasources.
+2. Provide a framework for loading / executing drivers both locally and in the cloud.
 
 Each driver translates the STAC-compliant request into a format compatible with the underlying API while translating the API response to a valid STAC Item.  Drivers are packaged and deployed to AWS Lambda and a single API Gateway endpoint is created which allows searching the loaded datasources.  The goal is to create an extensible service which allows users to integrate their datasets with the STAC ecosystem without having to change how their data is stored and queried.
 

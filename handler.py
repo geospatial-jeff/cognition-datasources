@@ -19,8 +19,8 @@ def worker(event, context):
             InvocationType="RequestResponse",
             Payload=json.dumps(args)
         )
-
-        conn.send(json.loads(response['Payload'].read()))
+        data = json.loads(response['Payload'].read())
+        conn.send(data)
         conn.close()
 
     package = json.loads(event['body'])
@@ -58,12 +58,12 @@ def worker(event, context):
         args.update({'properties': None})
 
     if 'limit' in params:
-        args.update({'kwargs': {'limit': package['limit']}})
+        args.update({'limit': package['limit']})
     else:
-        args.update({'kwargs': {'limit': 10}})
+        args.update({'limit': 10})
 
     if 'subdatasets' in params:
-        args.update({'kwargs': {'subdatasets': package['subdatasets']}})
+        args.update({'subdatasets': package['subdatasets']})
 
     processes = []
     parent_connections = []
@@ -93,5 +93,12 @@ def worker(event, context):
         'statusCode': 200,
         'body': json.dumps(out_d)
     }
+
+
+def PlanetData(event, context):
+    manifest = Manifest()
+    manifest['PlanetData'].search(**event)
+    response = manifest.execute()
+    return response
 
 

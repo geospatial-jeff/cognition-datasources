@@ -94,11 +94,3 @@ def worker(event, context):
         'body': json.dumps(out_d)
     }
 
-
-def PlanetData(event, context):
-    manifest = Manifest()
-    manifest['PlanetData'].search(**event)
-    response = manifest.execute()
-    return response
-
-

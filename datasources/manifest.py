@@ -38,28 +38,37 @@ class Manifest(dict):
                     "features": []
                 }})
 
-        # Execute searches (lambda safe)
-        processes = []
-        parent_connections = []
+        response_list = []
+        # Run in main process if only a single search
+        if len(self.searches) == 1:
+            resp = {
+                'stac_items': self.searches[0][0].execute(self.searches[0][1]),
+                'source': self.searches[0][0].__class__.__name__
+            }
+            response_list.append(resp)
+        # Spawn child processes if multiple searches
+        else:
+            processes = []
+            parent_connections = []
 
-        # print("Creating processes")
-        for search in self.searches:
-            parent_conn, child_conn = Pipe()
-            parent_connections.append(parent_conn)
-            process = Process(target=search[0].execute_multi, args=(search[1], child_conn))
-            processes.append(process)
+            for search in self.searches:
+                parent_conn, child_conn = Pipe()
+                parent_connections.append(parent_conn)
+                process = Process(target=search[0].execute_multi, args=(search[1], child_conn))
+                processes.append(process)
 
-        # print("Starting processes")
-        for process in processes:
-            process.start()
+            for process in processes:
+                process.start()
 
-        # print("Joining processes")
-        for process in processes:
-            process.join()
+            for process in processes:
+                process.join()
 
+            for parent_connection in parent_connections:
+                resp = parent_connection.recv()
+                response_list.append(resp)
 
-        for parent_connection in parent_connections:
-            resp = parent_connection.recv()
+        # Format driver response into feature collection
+        for resp in response_list:
             if resp['stac_items']:
                 stac_compliant = self[resp['source']].stac_compliant
                 if stac_compliant:

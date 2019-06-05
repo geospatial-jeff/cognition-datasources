@@ -4,7 +4,7 @@ with open('./requirements.txt') as reqs:
     requirements = [line.rstrip() for line in reqs]
 
 setup(name="cognition_datasources",
-      version='0.3',
+      version='0.3.1',
       author='Jeff Albrecht',
       author_email='geospatialjeff@gmail.com',
       packages=find_packages(exclude=['docs']),

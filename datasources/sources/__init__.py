@@ -31,6 +31,7 @@ class remote(object):
     Landsat8 = "https://cdn.jsdelivr.net/gh/geospatial-jeff/cognition-datasources-landsat8"
     MicrosoftBuildingFootprints = "https://cdn.jsdelivr.net/gh/geospatial-jeff/cognition-datasources-mbf"
     NAIP = "https://cdn.jsdelivr.net/gh/geospatial-jeff/cognition-datasources-naip"
+    PlanetData = "https://cdn.jsdelivr.net/gh/geospatial-jeff/cognition-datasources-planet"
     Sentinel1 = "https://cdn.jsdelivr.net/gh/geospatial-jeff/cognition-datasources-sentinel1"
     Sentinel2 = "https://cdn.jsdelivr.net/gh/geospatial-jeff/cognition-datasources-sentinel2"
     SRTM = "https://cdn.jsdelivr.net/gh/geospatial-jeff/cognition-datasources-srtm"

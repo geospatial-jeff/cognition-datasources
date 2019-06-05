@@ -62,6 +62,9 @@ def worker(event, context):
     else:
         args.update({'kwargs': {'limit': 10}})
 
+    if 'subdatasets' in params:
+        args.update({'kwargs': {'subdatasets': params['subdatasets']}})
+
     processes = []
     parent_connections = []
 

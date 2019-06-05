@@ -7,6 +7,7 @@
 | Landsat8 | [![CircleCI](https://circleci.com/gh/geospatial-jeff/cognition-datasources-landsat8.svg?style=svg)](https://circleci.com/gh/geospatial-jeff/cognition-datasources-landsat8) |
 | MicrosoftBuildingFootprints | [![CircleCI](https://circleci.com/gh/geospatial-jeff/cognition-datasources-mbf.svg?style=svg)](https://circleci.com/gh/geospatial-jeff/cognition-datasources-mbf) |
 | NAIP | [![CircleCI](https://circleci.com/gh/geospatial-jeff/cognition-datasources-naip.svg?style=svg)](https://circleci.com/gh/geospatial-jeff/cognition-datasources-naip) |
+| PlanetData | [![CircleCI](https://circleci.com/gh/geospatial-jeff/cognition-datasources-planet.svg?style=svg)](https://circleci.com/gh/geospatial-jeff/cognition-datasources-planet) |
 | Sentinel1 | [![CircleCI](https://circleci.com/gh/geospatial-jeff/cognition-datasources-sentinel1.svg?style=svg)](https://circleci.com/gh/geospatial-jeff/cognition-datasources-sentinel1) |
 | Sentinel2 | [![CircleCI](https://circleci.com/gh/geospatial-jeff/cognition-datasources-sentinel2.svg?style=svg)](https://circleci.com/gh/geospatial-jeff/cognition-datasources-sentinel2) |
 | SRTM | [![CircleCI](https://circleci.com/gh/geospatial-jeff/cognition-datasources-srtm.svg?style=svg)](https://circleci.com/gh/geospatial-jeff/cognition-datasources-srtm) |

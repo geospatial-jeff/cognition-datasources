@@ -1,0 +1,63 @@
+{
+  "id": "20190512_185450_ssc1d2_0013",
+  "properties": {
+    "legacy:camera_id": "d2",
+    "eo:cloud_cover": 0.06,
+    "legacy:ground_control": true,
+    "eo:gsd": 0.9,
+    "legacy:item_type": "SkySatScene",
+    "legacy:provider": "skysat",
+    "legacy:published": "2019-05-13T04:50:40.092Z",
+    "legacy:quality_category": "standard",
+    "legacy:satellite_azimuth": 163.4,
+    "legacy:satellite_id": "SSC1",
+    "legacy:strip_id": "s3_20190512T185450Z",
+    "eo:sun_azimuth": 139,
+    "eo:sun_elevation": 70.1,
+    "legacy:updated": "2019-06-01T19:14:40.178Z",
+    "eo:view_angle": 26.3,
+    "datetime": "2019-05-12T18:54:50.198Z"
+  },
+  "geometry": {
+    "coordinates": [
+      [
+        [
+          -118.27125967461974,
+          34.02656012436073
+        ],
+        [
+          -118.27165431050926,
+          34.01543268603169
+        ],
+        [
+          -118.24323589768909,
+          34.01259980898612
+        ],
+        [
+          -118.24284246712757,
+          34.02367576657337
+        ],
+        [
+          -118.27125967461974,
+          34.02656012436073
+        ]
+      ]
+    ],
+    "type": "Polygon"
+  },
+  "bbox": [
+    -118.27165431050926,
+    34.01259980898612,
+    -118.24284246712757,
+    34.02656012436073
+  ],
+  "assets": {
+    "thumbnail": {
+      "href": "https://tiles.planet.com/data/v1/item-types/SkySatScene/items/20190512_185450_ssc1d2_0013/thumb?api_key=cccee1c342ae484d8f4034bd3b9d6b24"
+    },
+    "assets": {
+      "href": "https://api.planet.com/data/v1/item-types/SkySatScene/items/20190512_185450_ssc1d2_0013/assets/"
+    }
+  },
+  "links": {}
+}

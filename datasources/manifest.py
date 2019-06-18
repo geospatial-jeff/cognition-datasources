@@ -41,10 +41,12 @@ class Manifest(dict):
         response_list = []
         # Run in main process if only a single search
         if len(self.searches) == 1:
+            print("Detecting a single search (inside driver)")
             resp = {
                 'stac_items': self.searches[0][0].execute(self.searches[0][1]),
                 'source': self.searches[0][0].__class__.__name__
             }
+            print(resp)
             response_list.append(resp)
         # Spawn child processes if multiple searches
         else:

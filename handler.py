@@ -13,15 +13,18 @@ lambda_client = boto3.client('lambda')
 
 def worker(event, context):
 
-    def lambda_invoke(service, stage, source, args, conn):
+    def lambda_invoke(service, stage, source, args, conn=None, multi=False):
         response = lambda_client.invoke(
             FunctionName=f"{service}-{stage}-{source}",
             InvocationType="RequestResponse",
             Payload=json.dumps(args)
         )
         data = json.loads(response['Payload'].read())
-        conn.send(data)
-        conn.close()
+        if multi:
+            conn.send(data)
+            conn.close()
+        else:
+            return data
 
     package = json.loads(event['body'])
     params = list(package)
@@ -68,11 +71,18 @@ def worker(event, context):
     processes = []
     parent_connections = []
 
+    if len(package['datasources']) == 1:
+        source = list(package['datasources'])[0]
+        return {
+            'statusCode': 200,
+            'body': json.dumps(lambda_invoke(service, stage, source, args, multi=False))
+        }
+
     for source in package['datasources']:
         parent_conn, child_conn = Pipe()
         parent_connections.append(parent_conn)
 
-        process = Process(target=lambda_invoke, args=(service, stage, source, args, child_conn))
+        process = Process(target=lambda_invoke, args=(service, stage, source, args, child_conn, True))
         processes.append(process)
 
     for process in processes:

@@ -19,7 +19,7 @@ python setup.py develop
 ## Deployment
 ```
 # Load datasources
-cognition-datasources -d Landsat8 -d Sentinel2 -d SRTM -d NAIP
+cognition-datasources load -d Landsat8 -d Sentinel2 -d SRTM -d NAIP
 
 # Build docker container
 docker build . -t cognition-datasources:latest

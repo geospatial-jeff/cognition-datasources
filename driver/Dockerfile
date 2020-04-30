@@ -3,8 +3,8 @@ FROM geospatialjeff/cognition-datasources:latest
 COPY requirements*.txt ./
 
 # Paths to things
+ENV PROD_LIBS=/build/prod
 ENV \
-    PROD_LIBS=/build/prod \
     PYTHONPATH=$PYTHONPATH:/$PROD_LIBS/lib/python3.6/site-packages:/home/cognition-datasources/spatial-db/lambda_db \
     LAMBDA_DB_PATH=/home/cognition-datasources/spatial-db/lambda_db/database.fs
 
